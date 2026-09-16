@@ -36,4 +36,11 @@ export class DashboardComponent implements OnInit {
   toggleSidebar(): void {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
+
+  onMainClick(): void {
+    // Close sidebar on mobile when clicking main content
+    if (window.innerWidth <= 768 && !this.sidebarCollapsed) {
+      this.sidebarCollapsed = true;
+    }
+  }
 }

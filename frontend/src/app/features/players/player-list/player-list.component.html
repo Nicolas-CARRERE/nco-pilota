@@ -2,31 +2,71 @@
   <h1>Joueurs</h1>
   <p class="lead">Liste des joueurs.</p>
 
+  <div class="list-controls">
+    <div class="search-bar">
+      <input 
+        type="text" 
+        class="search-input"
+        placeholder="Rechercher un joueur..."
+        [value]="searchQuery"
+        (input)="onSearchChange($any($event.target).value)"
+        aria-label="Rechercher un joueur"
+      />
+    </div>
+
+    <div class="sort-controls">
+      <label for="sort-select">Trier par :</label>
+      <select 
+        id="sort-select"
+        [value]="sortBy"
+        (change)="onSortChange($any($event.target).value)"
+        aria-label="Options de tri">
+        <option value="name">Nom</option>
+        <option value="gamesPlayed">Parties jouées</option>
+        <option value="wins">Victoires</option>
+      </select>
+      <button 
+        type="button" 
+        class="btn btn--outline btn--small"
+        (click)="onSortChange(sortBy)"
+        aria-label="Inverser l'ordre de tri">
+        {{ sortDir === 'asc' ? '↑' : '↓' }}
+      </button>
+    </div>
+  </div>
+
   <app-filter
     [config]="filterConfig"
     [filters]="filters"
     (filtersChange)="applyFilters($event)"
+    (resetFilters)="onResetFilters()"
   />
 
   @if (loading) {
     <app-loading></app-loading>
   } @else if (error) {
-    <div class="error-message">
+    <div class="error-message" role="alert">
       <p>{{ error }}</p>
       <button type="button" class="btn btn--outline" (click)="loadPlayers()">Réessayer</button>
     </div>
   } @else if (players.length === 0) {
-    <p>Aucun joueur trouvé.</p>
+    <p class="empty-state">Aucun joueur trouvé.</p>
   } @else {
-    <ul class="player-list">
+    <ul class="player-list" role="list" aria-label="Liste des joueurs">
       @for (p of players; track p.id) {
-        <li class="card player-card">
-          <a [routerLink]="['/players', p.id]" class="player-card-link">
+        <li class="card player-card" role="listitem">
+          <a [routerLink]="['/players', p.id]" class="player-card-link" [attr.aria-label]="'Voir le profil de ' + displayName(p)">
             <span class="player-name">{{ displayName(p) }}</span>
             <span class="player-stats">{{ p.gamesPlayed }} parties · {{ p.wins }} victoires</span>
           </a>
         </li>
       }
     </ul>
+
+    <div class="pagination" role="navigation" aria-label="Pagination">
+      <button type="button" class="btn btn--outline" [disabled]="offset === 0" (click)="pagePrev()" aria-label="Page précédente">Précédent</button>
+      <span class="pagination-info" aria-live="polite">{{ offset + 1 }} – {{ offset + players.length }} / {{ total }}</span>
+      <button type="button" class="btn btn--outline" [disabled]="offset + limit >= total" (click)="pageNext()" aria-label="Page suivante">Suivant</button>
+    </div>
   }
 </div>

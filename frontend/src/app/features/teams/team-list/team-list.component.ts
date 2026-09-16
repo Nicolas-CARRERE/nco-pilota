@@ -4,6 +4,7 @@ import { TeamsService } from '../../../core/services/teams.service';
 import { TeamListItem } from '../../../shared/models/team.model';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { FilterComponent, FilterConfig } from '../../../shared/components/filter/filter.component';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-team-list',
@@ -19,8 +20,12 @@ export class TeamListComponent implements OnInit {
   error: string | null = null;
   filters: Record<string, any> = {};
   filterConfig: FilterConfig = { showCompetition: true, compact: true };
+  searchQuery = '';
 
-  constructor(private teamsService: TeamsService) {}
+  constructor(
+    private teamsService: TeamsService,
+    private toastService: ToastService,
+  ) {}
 
   ngOnInit(): void {
     this.loadTeams();
@@ -31,9 +36,25 @@ export class TeamListComponent implements OnInit {
     this.loadTeams();
   }
 
+  onResetFilters(): void {
+    this.filters = {};
+    this.searchQuery = '';
+    this.toastService.info('Filtres réinitialisés');
+    this.loadTeams();
+  }
+
+  onSearchChange(query: string): void {
+    this.searchQuery = query;
+    this.loadTeams();
+  }
+
   loadTeams(): void {
     this.loading = true;
-    this.teamsService.getList({ limit: 200 }).subscribe({
+    const params: any = { limit: 200 };
+    if (this.searchQuery.trim()) {
+      params.search = this.searchQuery.trim();
+    }
+    this.teamsService.getList(params).subscribe({
       next: (res) => {
         this.teams = res.teams ?? [];
         this.total = res.total ?? 0;

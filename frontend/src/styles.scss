@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 :root {
-  --pelota-green: #008C45;
-  --pelota-red: #E30613;
+  --pelota-green: #007A3D; /* Darkened for better WCAG AA contrast on white */
+  --pelota-red: #C40210; /* Slightly darkened for better contrast */
   --pelota-white: #FFFFFF;
-  --pelota-green-dark: #006B35;
-  --pelota-red-dark: #B8050F;
+  --pelota-green-dark: #005A2D;
+  --pelota-red-dark: #9A010C;
   --pelota-gray-100: #f5f5f5;
   --pelota-gray-200: #eeeeee;
   --pelota-gray-700: #616161;
@@ -114,14 +114,32 @@ a {
 
 
 .error-message {
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   background: #ffebee;
   color: var(--pelota-red-dark);
-  border-radius: 4px;
-  border-left: 4px solid var(--pelota-red);
+  border-radius: 8px;
+  border-left: 5px solid var(--pelota-red);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  
+  &::before {
+    content: '⚠';
+    font-size: 1.25rem;
+    font-weight: bold;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  
   p {
     margin: 0 0 0.75rem;
+    font-weight: 500;
   }
+  
   .btn {
     margin-top: 0.5rem;
   }

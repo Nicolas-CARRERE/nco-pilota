@@ -2,24 +2,25 @@
   @if (loading) {
     <app-loading></app-loading>
   } @else if (error) {
-    <div class="error-message">{{ error }}</div>
+    <div class="error-message" role="alert">{{ error }}</div>
     <p><a routerLink="/players" class="btn btn--outline">Retour aux joueurs</a></p>
   } @else if (player) {
-    <p><a routerLink="/players" class="back-link">← Retour aux joueurs</a></p>
-    <article class="card player-detail-card">
-      <h1>{{ displayName(player.firstName, player.lastName, player.nickname) }}</h1>
-      <p class="stats-line">{{ player.gamesPlayed }} parties · {{ player.wins }} victoires · {{ player.losses }} défaites</p>
+    <app-breadcrumb [items]="breadcrumbs" />
+    <p><a routerLink="/players" class="back-link" aria-label="Retour à la liste des joueurs">← Retour aux joueurs</a></p>
+    <article class="card player-detail-card" aria-labelledby="player-title">
+      <h1 id="player-title">{{ displayName(player.firstName, player.lastName, player.nickname) }}</h1>
+      <p class="stats-line" aria-label="Statistiques du joueur">{{ player.gamesPlayed }} parties · {{ player.wins }} victoires · {{ player.losses }} défaites</p>
 
-      <section class="section">
-        <h2>Dernières parties</h2>
+      <section class="section" aria-labelledby="recent-games-title">
+        <h2 id="recent-games-title">Dernières parties</h2>
         @if (recentGames().length === 0) {
           <p>Aucune partie enregistrée.</p>
         } @else {
-          <ul class="match-list">
+          <ul class="match-list" role="list" aria-label="Liste des dernières parties">
             @for (g of recentGames(); track g.id) {
-              <li class="match-item">
+              <li class="match-item" role="listitem">
                 <span class="match-date">{{ g.startDate | formatDate }}</span>
-                <span class="match-badge" [class.badge-won]="g.won === true" [class.badge-lost]="g.won === false">
+                <span class="match-badge" [class.badge-won]="g.won === true" [class.badge-lost]="g.won === false" [attr.aria-label]="g.won === true ? 'Gagné' : (g.won === false ? 'Perdu' : '')">
                   @if (g.won !== undefined) {
                     {{ g.won ? 'Gagné' : 'Perdu' }}
                   }

@@ -7,6 +7,7 @@ import axios from "axios";
 import { PrismaClient } from "@prisma/client";
 
 import { ingestFromPipelineResult } from "../services/ingest-scraped-games.js";
+import { ingestScrapedData, ingestBatchScrapedData } from "../controllers/scrape.controller.js";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -871,5 +872,22 @@ async function runFfpbResultatsScrape(
     throw error;
   }
 }
+
+/**
+ * POST /scrape/ingest
+ * Scrape a URL and immediately ingest the results into the database.
+ * Returns summary of competitions and games created/updated.
+ */
+router.post("/ingest", async (request: Request, response: Response) => {
+  await ingestScrapedData(request, response);
+});
+
+/**
+ * POST /scrape/ingest/batch
+ * Batch ingest multiple scrape results into the database.
+ */
+router.post("/ingest/batch", async (request: Request, response: Response) => {
+  await ingestBatchScrapedData(request, response);
+});
 
 export { router as scrapeRouter };

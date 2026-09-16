@@ -2,12 +2,13 @@
   @if (loading) {
     <app-loading></app-loading>
   } @else if (error) {
-    <div class="error-message">{{ error }}</div>
+    <div class="error-message" role="alert">{{ error }}</div>
     <p><a routerLink="/teams" class="btn btn--outline">Retour aux équipes</a></p>
   } @else if (team) {
-    <p><a routerLink="/teams" class="back-link">← Retour aux équipes</a></p>
-    <article class="card team-detail-card">
-      <h1>
+    <app-breadcrumb [items]="breadcrumbs" />
+    <p><a routerLink="/teams" class="back-link" aria-label="Retour à la liste des équipes">← Retour aux équipes</a></p>
+    <article class="card team-detail-card" aria-labelledby="team-title">
+      <h1 id="team-title">
         {{ team.name }}
         @if (team.number != null) {
           <span class="team-number">N°{{ team.number }}</span>
@@ -19,11 +20,11 @@
       <p class="meta">Discipline : {{ team.discipline.name }}</p>
 
       @if (team.teamPlayers.length) {
-        <section class="section">
-          <h2>Joueurs</h2>
-          <ul class="player-list">
+        <section class="section" aria-labelledby="players-title">
+          <h2 id="players-title">Joueurs</h2>
+          <ul class="player-list" role="list" aria-label="Liste des joueurs">
             @for (tp of team.teamPlayers; track tp.player.id) {
-              <li>
+              <li role="listitem">
                 <a [routerLink]="['/players', tp.player.id]">{{ playerName(tp.player) }}</a>
               </li>
             }
@@ -32,18 +33,18 @@
       }
 
       @if (team.recentGames?.length) {
-        <section class="section">
-          <h2>Parties récentes</h2>
-          <ul class="game-list">
+        <section class="section" aria-labelledby="recent-games-title">
+          <h2 id="recent-games-title">Parties récentes</h2>
+          <ul class="game-list" role="list" aria-label="Liste des parties récentes">
             @for (g of team.recentGames; track g.id) {
-              <li class="game-item">
+              <li class="game-item" role="listitem">
                 <span class="game-date">{{ g.startDate | formatDate }}</span>
-                <span class="match-badge" [class.badge-won]="g.won === true" [class.badge-lost]="g.won === false">
+                <span class="match-badge" [class.badge-won]="g.won === true" [class.badge-lost]="g.won === false" [attr.aria-label]="g.won === true ? 'Gagné' : (g.won === false ? 'Perdu' : '')">
                   @if (g.won !== undefined) {
                     {{ g.won ? 'Gagné' : 'Perdu' }}
                   }
                 </span>
-                <a [routerLink]="['/games', g.id]" class="game-link">
+                <a [routerLink]="['/games', g.id]" class="game-link" [attr.aria-label]="'Voir les détails de la partie: ' + formatVersus(g)">
                   {{ formatVersus(g) }}
                 </a>
                 <span class="game-score">{{ scoreDisplay(g.gameScores) }}</span>

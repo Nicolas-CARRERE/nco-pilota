@@ -10,6 +10,7 @@ export interface PlayerStatsListItem {
 
 export interface PlayersListResponse {
   players: PlayerStatsListItem[];
+  total?: number;
 }
 
 export interface PlayerDetailGame {

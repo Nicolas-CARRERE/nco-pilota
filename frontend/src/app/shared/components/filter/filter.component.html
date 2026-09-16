@@ -1,68 +1,228 @@
 <div class="filters" [class.filters--compact]="config.compact">
   <form class="filters-form" (ngSubmit)="filtersChange.emit(filters)">
-    @if (config.showCompetition) {
+    @if (loading && config.showCompetition) {
+      <div class="filter-loading" role="status" aria-label="Chargement des compétitions">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Chargement...</span>
+      </div>
+    }
+
+    @if (config.showCompetition && !loading) {
       <label class="filter-label">
         Compétition
-        <select [(ngModel)]="filters['competitionId']" name="competitionId" (ngModelChange)="onFilterChange('competitionId', $event)">
+        <select 
+          [(ngModel)]="filters['competitionId']" 
+          name="competitionId" 
+          (ngModelChange)="onFilterChange('competitionId', $event)"
+          [class.is-invalid]="hasError('competitionId')"
+          [attr.aria-invalid]="hasError('competitionId')"
+          [attr.aria-describedby]="hasError('competitionId') ? 'competitionId-error' : null">
           <option value="">Toutes</option>
           @for (c of competitions; track c.id) {
             <option [value]="c.id">{{ c.year.year }} – {{ c.discipline.name }} ({{ c.organizer.name }})</option>
           }
         </select>
+        @if (hasError('competitionId')) {
+          <span id="competitionId-error" class="error-text" role="alert">{{ getError('competitionId') }}</span>
+        }
       </label>
     }
 
     @if (config.showDiscipline) {
       <label class="filter-label">
         Discipline
-        <select [(ngModel)]="filters['discipline']" name="discipline" (ngModelChange)="onFilterChange('discipline', $event)">
+        <select 
+          [(ngModel)]="filters['discipline']" 
+          name="discipline" 
+          (ngModelChange)="onFilterChange('discipline', $event)"
+          [class.is-invalid]="hasError('discipline')"
+          [attr.aria-invalid]="hasError('discipline')"
+          [attr.aria-describedby]="hasError('discipline') ? 'discipline-error' : null">
           @for (opt of disciplineOptions; track opt.value) {
             <option [value]="opt.value">{{ opt.label }}</option>
           }
         </select>
+        @if (hasError('discipline')) {
+          <span id="discipline-error" class="error-text" role="alert">{{ getError('discipline') }}</span>
+        }
       </label>
     }
 
     @if (config.showSeason) {
       <label class="filter-label">
         Saison
-        <input type="number" [(ngModel)]="filters['season']" name="season" placeholder="Année" (ngModelChange)="onFilterChange('season', $event)" />
+        <input 
+          type="number" 
+          [(ngModel)]="filters['season']" 
+          name="season" 
+          placeholder="Année" 
+          (ngModelChange)="onFilterChange('season', $event)"
+          [class.is-invalid]="hasError('season')"
+          [attr.aria-invalid]="hasError('season')"
+          [attr.aria-describedby]="hasError('season') ? 'season-error' : null" />
+        @if (hasError('season')) {
+          <span id="season-error" class="error-text" role="alert">{{ getError('season') }}</span>
+        }
       </label>
     }
 
     @if (config.showPhase) {
       <label class="filter-label">
         Phase
-        <select [(ngModel)]="filters['phase']" name="phase" (ngModelChange)="onFilterChange('phase', $event)">
+        <select 
+          [(ngModel)]="filters['phase']" 
+          name="phase" 
+          (ngModelChange)="onFilterChange('phase', $event)"
+          [class.is-invalid]="hasError('phase')"
+          [attr.aria-invalid]="hasError('phase')"
+          [attr.aria-describedby]="hasError('phase') ? 'phase-error' : null">
           @for (opt of phaseOptions; track opt.value) {
             <option [value]="opt.value">{{ opt.label }}</option>
           }
         </select>
+        @if (hasError('phase')) {
+          <span id="phase-error" class="error-text" role="alert">{{ getError('phase') }}</span>
+        }
       </label>
     }
 
     @if (config.showDateRange) {
       <label class="filter-label">
         Date début
-        <input type="date" [(ngModel)]="filters['date_from']" name="date_from" (ngModelChange)="onFilterChange('date_from', $event)" />
+        <input 
+          type="date" 
+          [(ngModel)]="filters['date_from']" 
+          name="date_from" 
+          (ngModelChange)="onFilterChange('date_from', $event)"
+          [class.is-invalid]="hasError('date_from')"
+          [attr.aria-invalid]="hasError('date_from')"
+          [attr.aria-describedby]="hasError('date_from') ? 'date_from-error' : null" />
+        @if (hasError('date_from')) {
+          <span id="date_from-error" class="error-text" role="alert">{{ getError('date_from') }}</span>
+        }
       </label>
       <label class="filter-label">
         Date fin
-        <input type="date" [(ngModel)]="filters['date_to']" name="date_to" (ngModelChange)="onFilterChange('date_to', $event)" />
+        <input 
+          type="date" 
+          [(ngModel)]="filters['date_to']" 
+          name="date_to" 
+          (ngModelChange)="onFilterChange('date_to', $event)"
+          [class.is-invalid]="hasError('date_to')"
+          [attr.aria-invalid]="hasError('date_to')"
+          [attr.aria-describedby]="hasError('date_to') ? 'date_to-error' : null" />
+        @if (hasError('date_to')) {
+          <span id="date_to-error" class="error-text" role="alert">{{ getError('date_to') }}</span>
+        }
       </label>
     }
 
     @if (config.showStatus) {
       <label class="filter-label">
         Statut
-        <select [(ngModel)]="filters['status']" name="status" (ngModelChange)="onFilterChange('status', $event)">
+        <select 
+          [(ngModel)]="filters['status']" 
+          name="status" 
+          (ngModelChange)="onFilterChange('status', $event)"
+          [class.is-invalid]="hasError('status')"
+          [attr.aria-invalid]="hasError('status')"
+          [attr.aria-describedby]="hasError('status') ? 'status-error' : null">
           @for (opt of statusOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+        @if (hasError('status')) {
+          <span id="status-error" class="error-text" role="alert">{{ getError('status') }}</span>
+        }
+      </label>
+    }
+
+    @if (config.showGranularFilters) {
+      <label class="filter-label">
+        Discipline
+        <select 
+          [(ngModel)]="filters['discipline']" 
+          name="discipline" 
+          (ngModelChange)="onFilterChange('discipline', $event)">
+          @for (opt of granularDisciplineOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-label">
+        Saison
+        <select 
+          [(ngModel)]="filters['season']" 
+          name="season" 
+          (ngModelChange)="onFilterChange('season', $event)">
+          @for (opt of granularSeasonOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-label">
+        Année
+        <select 
+          [(ngModel)]="filters['year']" 
+          name="year" 
+          (ngModelChange)="onFilterChange('year', $event)">
+          @for (opt of granularYearOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-label">
+        Série
+        <select 
+          [(ngModel)]="filters['series']" 
+          name="series" 
+          (ngModelChange)="onFilterChange('series', $event)">
+          @for (opt of granularSeriesOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-label">
+        Groupe
+        <select 
+          [(ngModel)]="filters['group']" 
+          name="group" 
+          (ngModelChange)="onFilterChange('group', $event)">
+          @for (opt of granularGroupOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-label">
+        Poule/Phase
+        <select 
+          [(ngModel)]="filters['pool']" 
+          name="pool" 
+          (ngModelChange)="onFilterChange('pool', $event)">
+          @for (opt of granularPoolOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-label">
+        Organisation
+        <select 
+          [(ngModel)]="filters['organization']" 
+          name="organization" 
+          (ngModelChange)="onFilterChange('organization', $event)">
+          @for (opt of granularOrganizationOptions; track opt.value) {
             <option [value]="opt.value">{{ opt.label }}</option>
           }
         </select>
       </label>
     }
 
-    <button type="button" class="btn btn--outline btn--small" (click)="resetFilters()">Réinitialiser</button>
+    <button type="button" class="btn btn--outline btn--small" (click)="onResetFilters()" aria-label="Réinitialiser les filtres">Réinitialiser</button>
   </form>
 </div>

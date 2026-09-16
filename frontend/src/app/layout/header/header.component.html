@@ -1,7 +1,36 @@
 <header class="app-header">
   <div class="container header-inner">
     <a routerLink="/" class="logo">Pelota</a>
-    <nav class="nav" aria-label="Navigation principale">
+    
+    <!-- Hamburger button for mobile -->
+    <button 
+      class="hamburger-btn" 
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="mobileMenuOpen"
+      aria-label="Menu"
+      aria-controls="mobile-nav">
+      <span class="hamburger-line" [class.open]="mobileMenuOpen"></span>
+      <span class="hamburger-line" [class.open]="mobileMenuOpen"></span>
+      <span class="hamburger-line" [class.open]="mobileMenuOpen"></span>
+    </button>
+    
+    <!-- Desktop navigation -->
+    <nav class="nav nav-desktop" aria-label="Navigation principale">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Accueil</a>
+      <a routerLink="/games" routerLinkActive="active" class="nav-link">Résultats</a>
+      <a routerLink="/players" routerLinkActive="active" class="nav-link">Joueurs</a>
+      <a routerLink="/teams" routerLinkActive="active" class="nav-link">Équipes</a>
+      <a routerLink="/championships" routerLinkActive="active" class="nav-link">Championnats</a>
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">Dashboard</a>
+    </nav>
+    
+    <!-- Mobile navigation (collapsible) -->
+    <nav 
+      id="mobile-nav"
+      class="nav nav-mobile" 
+      aria-label="Navigation principale"
+      [class.open]="mobileMenuOpen"
+      (click)="closeMobileMenu()">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Accueil</a>
       <a routerLink="/games" routerLinkActive="active" class="nav-link">Résultats</a>
       <a routerLink="/players" routerLinkActive="active" class="nav-link">Joueurs</a>

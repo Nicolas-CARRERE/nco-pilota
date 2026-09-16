@@ -2,11 +2,13 @@
   @if (loading) {
     <app-loading></app-loading>
   } @else if (error) {
-    <div class="error-message">{{ error }}</div>
+    <div class="error-message" role="alert">{{ error }}</div>
     <p><a routerLink="/championships" class="btn btn--outline">Retour aux championnats</a></p>
   } @else if (competition) {
-    <p><a routerLink="/championships" class="back-link">← Retour aux championnats</a></p>
-    <article class="card championship-detail-card">
+    <app-breadcrumb [items]="breadcrumbs" />
+    <p><a routerLink="/championships" class="back-link" aria-label="Retour à la liste des championnats">← Retour aux championnats</a></p>
+    <article class="card championship-detail-card" aria-labelledby="championship-title">
+      <h1 id="championship-title">{{ competition.year.year }} – {{ competition.discipline.name }}</h1>
       <h1>{{ competition.year.year }} – {{ competition.discipline.name }}</h1>
       <p class="meta">Organisateur : {{ competition.organizer.name }}</p>
       <p class="meta">Statut : {{ competition.status }}</p>

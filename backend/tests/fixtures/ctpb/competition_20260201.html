@@ -1,0 +1,625 @@
+<html>
+<head>
+    <link rel="shortcut icon" type="image/png" href="./ligues/ctpb/style/favicon.png" />
+    <link rel="icon" type="image/png" href="./ligues/ctpb/style/favicon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="./ligues/ctpb/style/favicon-180.png">
+    <title>Comité Territorial Pays Basque de Pelote Basque : resultats</title>
+    <link rel="STYLESHEET" TYPE="text/css" HREF="ligues/default/style/style.css">
+    <link rel="STYLESHEET" TYPE="text/css" HREF="/../ligues/ctpb/style/style.css">
+    <meta http-equiv="content-type" content="text-html; charset=utf-8">
+    <script type="text/javascript">
+	function afficher(element){
+	    objet=document.getElementById(element).className;
+	    if(objet=='cache')
+	    document.getElementById(element).className='visible';
+	    else document.getElementById(element).className='cache';
+	}
+    </script>
+
+    <link rel="stylesheet" href="javascript/jquery-ui/themes/smoothness/jquery.ui.all.css">
+    <script src="js/jquery-ui-1.14.1.custom/external/jquery/jquery.js"></script>
+    <script src="js/jquery-ui-1.14.1.custom/jquery-ui.js"></script>
+    <script src="js/jquery.ui.datepicker-fr.js"></script>
+    <script src="javascript/jquery-timepicker/jquery-ui-timepicker-addon.js"></script>
+    <link rel="stylesheet" href="javascript/jquery-timepicker/jquery-ui-timepicker-addon.css">
+    <script src="js/select2.js/select2.js"></script>
+    <link rel="stylesheet" href="js/select2.js/select2.css">
+    <script>
+
+
+	function cache_menu() {
+	    if ( jQuery(window).width() <= 1024 ){
+		jQuery('#bouton_menu').show();
+		jQuery('#menu').hide();
+	    }
+	}
+
+	function montre_menu(){
+	    jQuery('#bouton_menu').hide();
+	    jQuery('#menu').show();
+	}
+
+	jQuery(function() {
+
+	    
+
+	    jQuery(".datepicker" ).datepicker({
+		dateFormat: 'dd/mm/yy',
+		beforeShow: function (input, inst) {
+		    var rect = input.getBoundingClientRect();
+        inst.dpDiv.css({marginTop: -input.offsetHeight + 'px', marginLeft: input.offsetWidth + 'px'});
+		},
+	    	    });
+
+	    jQuery('.timepicker').timepicker({
+		timeOnlyTitle: 'Heure de rencontre',
+		currentText:'Maintenant',
+		closeText:'Valider',
+		timeFormat: 'HH:mm',
+		hourMax : 22,
+		hourMin : 8,
+		timeText:"Début",
+		hourText:"Heure",
+		minuteText:"Minute",
+		stepMinute:15,
+		defaultValue : '13:00',
+	    });
+
+//	    jQuery('#appli').on('mouseenter', cache_menu);
+//	    jQuery('#appli').on('click', cache_menu);
+//	    jQuery('#menu').on('mouseleave', cache_menu);
+	    jQuery('#bouton_menu').on('click', montre_menu);
+	});// document ready
+
+
+    </script>
+</head>
+
+<body>
+
+
+<div id="bouton_menu"></div>
+<div id="menu">
+    <a href="infos.php"  class="logo" id="logo"></a>
+    <div id="col_gauche">
+	<div class="GTitre">CONSULTATIONS</div>
+	<div class="GBloc">
+	    <ul>
+    		<li><a class="GA" href="engagements.php" >Engagements et responsables</a></li>
+    
+		<li><a class="GA" href="rencontres.php" >Rencontres</a></li>
+		<li><a class="GA" href="resultats.php" >Résultats</a></li>
+		<li><a class="GA" href="classements.php" >Classements</a></li>
+		<li><a class="GA" href="palmares.php" >Palmar&egrave;s</a></li>
+		<li class="cache_phone"><a class="GA" href="reports.php" >Reports ou arrêts</a></li><br />
+		<li><a class="GA" href="periodes.php" >P&eacute;riode engagements</a></li>
+		<li><a class="GA" href="finales.php" >Programme finales</a></li>
+	    </ul>
+	</div>
+	
+	<div class="GTitre">INFORMATIONS</div>
+	<div class="GBloc">
+	    <ul>
+    		<li><a class="GA" href="infos.php?club=ligue" >Comité</a></li>
+    		<li><a class="GA" href="infos.php?club=autres" >Clubs</a></li>
+		<li><a class="GA" href="renseignements.php" >Coordonn&eacute;es&nbsp;club&nbsp;</a></li>
+    		<li class="cache_phone"><a class="GA" href="classlic.php" >Classement Joueurs</a></li>
+        		<li><a class="GA" href="installations.php" >Installations&nbsp;</a></li>
+	
+			<li><a class="GA" href="http://www.comite-pelote-basque.eus/" target="_blank">
+		    CTPB : Site Général		</a></li>
+    	
+    		<li><a class="GA" href="http://competition.ffpb.net/FFPB_COMPETITION" target="_blank">FFPB : Site Compétitions</a></li>
+    	    </ul>
+	</div>
+    	<div class="GTitre">IDENTIFICATION</div>
+	<div class="GBloc">
+	    <span class="small">Cette zone est réservée aux clubs,
+		elle leur permet de modifier les informations qui les concernent
+	    </span>
+	    <form method="post" action="/infos.php" class="GA" style="text-align:right; line-height">
+		Comité <select name ="InComite" style="width:16em;">
+		<option
+		    value="01330"
+		    
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;COTE D'ARGENT</option>
+		<option
+		    value="01400"
+		    
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;LANDES</option>
+		<option
+		    value="01641"
+		     selected
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;PAYS BASQUE</option>
+		<option
+		    value="01642"
+		    
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;BEARN</option>
+		<option
+		    value="02310"
+		    
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;OCCITANIE</option>
+		<option
+		    value="03750"
+		    
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;ILE DE FRANCE</option>
+		<option
+		    value="05060"
+		    
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;PROVENCE-ALPES COTE D'AZUR</option>
+		<option
+		    value="99999"
+		    
+		    style='
+			padding-left:2em;
+		    '
+		>&nbsp;-&nbsp;EUSKADI</option></select>
+		<br />
+		<input type="text" size="20" maxlength="3" name="InClubLogin" placeholder="N° de Club">
+		<br/>
+		<input type="password" size="20" maxlength="10" name="InPwd" placeholder="code secret">
+		<br /><br />
+		<input type="submit" name="InIdent" value="Valider">&nbsp;
+	    </form>
+	</div>
+    
+	<center>
+		<a href=# OnClick="window.print();">
+			<img src="./images/print.gif" width="33" height="29" border="0" alt="Imprimer">
+	    </a><br />
+		<a href="./cgu.php" style="text-decoration:none; color:black; font-size:0.8em;">Mentions légales</a>
+	</center>
+	&nbsp;
+    </div>
+</div>
+
+<div id="appli" align="center" class="resultats">
+<h1>
+			RESULTATS : SAISON 2026<br/>
+			EMAITZAK : 2026 DENBORALDIA			<br/><span class="small"><B>Aujourd'hui :</B> Lundi&nbsp;30&nbsp;Mars&nbsp;2026,&nbsp;7h19</span>
+</h1>
+<form action="resultats.php" method="post">
+    <input type="hidden" name="InSel"/>
+    <table cellpadding="0" cellspacing="1">
+	<tr>
+	    <td colspan="2">
+		<table class="cadre" cellpadding="5">
+		    <tr>
+			<td align="right">Compétition</td>
+			<td>
+			<SELECT NAME="InCompet" OnChange=" submit();">
+			<OPTION VALUE="20260102">Championnat été 2026</OPTION>
+			<OPTION VALUE="20260104">Championnat d'Hiver 2025/2026</OPTION>
+			<OPTION VALUE="20260108">Tournoi PILOTARIAK 2025/2026</OPTION>
+			<OPTION VALUE="20260106">Tournois Divers et Mintegiak Hiver 2025/2026</OPTION>
+			<OPTION VALUE="20250108">Tournoi PILOTARIAK été 2025</OPTION>
+			<OPTION VALUE="20250102">Championnat été 2025</OPTION>
+			<OPTION VALUE="20250104">Championnat d'Hiver 2024/2025</OPTION>
+			<OPTION VALUE="20250106">Tournois Divers et  Mintegiak Hiver 2024-2025</OPTION>
+			<OPTION VALUE="20240102">Championnat été 2024</OPTION>
+			<OPTION VALUE="20240104">Championnat d'Hiver 2023/2024</OPTION>
+			<OPTION VALUE="20240106">Tournois Divers et  Mintegiak Hiver 2023/2024</OPTION>
+			<OPTION VALUE="20230102">Championnat été 2023</OPTION>
+			<OPTION VALUE="20230104">Championnat d'Hiver 2022/2023</OPTION>
+			<OPTION VALUE="20230106">Tournois Divers et  Mintegiak Hiver 2022/2023</OPTION>
+			<OPTION VALUE="20220102">Championnat été 2022</OPTION>
+			<OPTION VALUE="20220104">Championnat d'Hiver 2021/2022</OPTION>
+	    </SELECT></td>
+			<td align="right">Spécialité</td>
+			<td>
+			<SELECT NAME="InSpec" OnChange="">
+	    <OPTION VALUE="0" class="mTitreSmall">Toutes</OPTION>
+			<OPTION VALUE="12">Place Libre / Chistera Joko Garbi</OPTION>
+			<OPTION VALUE="38">Place Libre / Chistera Joko Garbi - Groupe B</OPTION>
+			<OPTION VALUE="13">Place Libre / Grand Chistera</OPTION>
+			<OPTION VALUE="11" selected>Place Libre / Main Nue - Groupe A</OPTION>
+			<OPTION VALUE="59">Place Libre / Main Nue - Groupe B</OPTION>
+			<OPTION VALUE="141">Place Libre / Main Nue - Groupe C</OPTION>
+			<OPTION VALUE="16">Place Libre / P.G Pleine Masculin</OPTION>
+			<OPTION VALUE="15">Place Libre / Rebot</OPTION>
+	    </SELECT>			</td>
+		    </tr>
+		    <tr>
+			<td align="right">Ville du si&egrave;ge</td><td>
+			    
+    <select name="InVille" onChange="submit();">
+	
+	    <option value="" class="mTitreSmall">*** TOUTES ***</option>
+	    <option value="ARCACHON" class="mTitreSmall">*** COTE D'ARGENT ***</option>
+	    <option value="ARCACHON" >ARCACHON</option>
+	    <option value="BORDEAUX" >BORDEAUX</option>
+	    <option value="LE HAILLAN" >LE HAILLAN</option>
+	    <option value="PESSAC" >PESSAC</option>
+	    <option value="VILLENAVE D ORNON" >VILLENAVE D ORNON</option>
+	    <option value="VILLENAVE D'ORNON" >VILLENAVE D'ORNON</option>
+	    <option value="BENESSE" class="mTitreSmall">*** LANDES ***</option>
+	    <option value="BENESSE" >BENESSE</option>
+	    <option value="BIAROTTE" >BIAROTTE</option>
+	    <option value="DAX" >DAX</option>
+	    <option value="HASTINGUES" >HASTINGUES</option>
+	    <option value="HOSSEGOR" >HOSSEGOR</option>
+	    <option value="LABENNE" >LABENNE</option>
+	    <option value="MORCENX" >MORCENX</option>
+	    <option value="PEYREHORADE" >PEYREHORADE</option>
+	    <option value="PORT DE LANNE" >PORT DE LANNE</option>
+	    <option value="SAINT ANDRE DE SEIGNANX" >SAINT ANDRE DE SEIGNANX</option>
+	    <option value="SAINTE MARIE" >SAINTE MARIE</option>
+	    <option value="SAINT LONS LES MINES" >SAINT LONS LES MINES</option>
+	    <option value="SAINT MARTIN DE SEIGNANX" >SAINT MARTIN DE SEIGNANX</option>
+	    <option value="SAUBRIGUES" >SAUBRIGUES</option>
+	    <option value="SAUBUSSE" >SAUBUSSE</option>
+	    <option value="SEIGNOSSE" >SEIGNOSSE</option>
+	    <option value="ST LON LES MINES" >ST LON LES MINES</option>
+	    <option value="TOSSE" >TOSSE</option>
+	    <option value="AHETZE" class="mTitreSmall">*** PAYS BASQUE ***</option>
+	    <option value="AHETZE" >AHETZE</option>
+	    <option value="ANGLET" >ANGLET</option>
+	    <option value="ARBONNE" >ARBONNE</option>
+	    <option value="ARCANGUES" >ARCANGUES</option>
+	    <option value="ARMENDARITS" >ARMENDARITS</option>
+	    <option value="ASCAIN" >ASCAIN</option>
+	    <option value="AYHERRE" >AYHERRE</option>
+	    <option value="BAIGORRY" >BAIGORRY</option>
+	    <option value="BARDOS" >BARDOS</option>
+	    <option value="BASSUSSARRY" >BASSUSSARRY</option>
+	    <option value="BAYONNE" >BAYONNE</option>
+	    <option value="BEGUIOS" >BEGUIOS</option>
+	    <option value="BIARRITZ" >BIARRITZ</option>
+	    <option value="BIDACHE" >BIDACHE</option>
+	    <option value="BIDART" >BIDART</option>
+	    <option value="BOUCAU" >BOUCAU</option>
+	    <option value="BRISCOUS" >BRISCOUS</option>
+	    <option value="CAMBO" >CAMBO</option>
+	    <option value="CIBOURE" >CIBOURE</option>
+	    <option value="ESPELETTE" >ESPELETTE</option>
+	    <option value="ESQUIULE" >ESQUIULE</option>
+	    <option value="GOTEIN LIBARRENX" >GOTEIN LIBARRENX</option>
+	    <option value="GUETHARY" >GUETHARY</option>
+	    <option value="GUICHE" >GUICHE</option>
+	    <option value="HASPARREN" >HASPARREN</option>
+	    <option value="HENDAYE" >HENDAYE</option>
+	    <option value="IRISSARRY" >IRISSARRY</option>
+	    <option value="ITXASSOU" >ITXASSOU</option>
+	    <option value="LAHONCE" >LAHONCE</option>
+	    <option value="LARCEVEAU" >LARCEVEAU</option>
+	    <option value="LARRESSORE" >LARRESSORE</option>
+	    <option value="LES ALDUDES" >LES ALDUDES</option>
+	    <option value="MAULEON" >MAULEON</option>
+	    <option value="MENDIONDE MACAYE LOUHOSSOA" >MENDIONDE MACAYE LOUHOSSOA</option>
+	    <option value="MOUGUERRE" >MOUGUERRE</option>
+	    <option value="PAGOLLE" >PAGOLLE</option>
+	    <option value="SAINT ESTEBEN" >SAINT ESTEBEN</option>
+	    <option value="SAINT JEAN DE LUZ" >SAINT JEAN DE LUZ</option>
+	    <option value="SAINT JEAN PIED  DE PORT" >SAINT JEAN PIED  DE PORT</option>
+	    <option value="SAINT PALAIS" >SAINT PALAIS</option>
+	    <option value="SAINT PEE SUR NIVELLE" >SAINT PEE SUR NIVELLE</option>
+	    <option value="SAINT PIERRE D IRUBE" >SAINT PIERRE D IRUBE</option>
+	    <option value="SARE" >SARE</option>
+	    <option value="SOURAIDE" >SOURAIDE</option>
+	    <option value="TARDETS" >TARDETS</option>
+	    <option value="URRUGNE" >URRUGNE</option>
+	    <option value="URT" >URT</option>
+	    <option value="USTARITZ" >USTARITZ</option>
+	    <option value="VILLEFRANQUE" >VILLEFRANQUE</option>
+	    <option value="ARETTE" class="mTitreSmall">*** BEARN ***</option>
+	    <option value="ARETTE" >ARETTE</option>
+	    <option value="BIZANOS" >BIZANOS</option>
+	    <option value="LESCAR" >LESCAR</option>
+	    <option value="NAVARRENX" >NAVARRENX</option>
+	    <option value="OGEU" >OGEU</option>
+	    <option value="OLORON" >OLORON</option>
+	    <option value="ORTHEZ" >ORTHEZ</option>
+	    <option value="PARDIES" >PARDIES</option>
+	    <option value="PAU" >PAU</option>
+	    <option value="SALIES" >SALIES</option>
+	    <option value="SAUVETERRE" >SAUVETERRE</option>
+	    <option value="LUCHON" class="mTitreSmall">*** OCCITANIE ***</option>
+	    <option value="LUCHON" >LUCHON</option>
+	    <option value="PAMIERS" >PAMIERS</option>
+	    <option value="TOULOUSE" >TOULOUSE</option>
+	    <option value="PARIS" class="mTitreSmall">*** ILE DE FRANCE ***</option>
+	    <option value="PARIS" >PARIS</option>
+	    <option value="CANNES" class="mTitreSmall">*** PROVENCE-ALPES COTE D'AZUR ***</option>
+	    <option value="CANNES" >CANNES</option>
+	    <option value="" class="mTitreSmall">*** EUSKADI ***</option>
+	    <option value="" selected></option>
+	    <option value="ABADINO" >ABADINO</option>
+	    <option value="ADURZA" >ADURZA</option>
+	    <option value="ANOETA" >ANOETA</option>
+	    <option value="ATARRABIA" >ATARRABIA</option>
+	    <option value="Atxarte-Abadiño" >Atxarte-Abadiño</option>
+	    <option value="AUNAMENDI" >AUNAMENDI</option>
+	    <option value="BERRIZ" >BERRIZ</option>
+	    <option value="BIZKAIA - OSMA-Mallabia" >BIZKAIA - OSMA-Mallabia</option>
+	    <option value="DONOSTIA" >DONOSTIA</option>
+	    <option value="ELIZONDO" >ELIZONDO</option>
+	    <option value="ELORRIO" >ELORRIO</option>
+	    <option value="ERRENTERIA" >ERRENTERIA</option>
+	    <option value="GAZTEIZ" >GAZTEIZ</option>
+	    <option value="HERNANI" >HERNANI</option>
+	    <option value="Hondarrabia" >Hondarrabia</option>
+	    <option value="IRUN" >IRUN</option>
+	    <option value="IRURA" >IRURA</option>
+	    <option value="IRURITA" >IRURITA</option>
+	    <option value="MAESTU" >MAESTU</option>
+	    <option value="MALLABIA - BIZKAIA" >MALLABIA - BIZKAIA</option>
+	    <option value="MENDILLORI" >MENDILLORI</option>
+	    <option value="Meskiritz" >Meskiritz</option>
+	    <option value="MUTRIKU" >MUTRIKU</option>
+	    <option value="NAFARROA" >NAFARROA</option>
+	    <option value="NAVARRA" >NAVARRA</option>
+	    <option value="NOAIN" >NOAIN</option>
+	    <option value="OIARTZUN" >OIARTZUN</option>
+	    <option value="OIARZUN" >OIARZUN</option>
+	    <option value="Pampelune" >Pampelune</option>
+	    <option value="PAMPELUNE" >PAMPELUNE</option>
+	    <option value="PRADEJON" >PRADEJON</option>
+	    <option value="SAN SEBASTIAN" >SAN SEBASTIAN</option>
+	    <option value="SOPELENA" >SOPELENA</option>
+	    <option value="TOLOSA" >TOLOSA</option>
+	    <option value="URNIETA" >URNIETA</option>
+	    <option value="VILLABONA" >VILLABONA</option>
+	    <option value="VITORIA" >VITORIA</option>
+	    <option value="ZIZUR NAGUSIA" >ZIZUR NAGUSIA</option>
+	    <option value="ZUBIETA" >ZUBIETA</option>
+	    <option value="ZUMAIA" >ZUMAIA</option>
+    </select>
+			</td>
+			<td align="right">Club</td><td>
+			    
+    <select name="InClub" onChange="submit();">
+	
+	    <option value="" class="mTitreSmall">*** TOUS ***</option>
+	    <option value="1641000" class="mTitreSmall" disabled>*** PAYS BASQUE ***</option>
+	    <option value="1641035" >ABARRATIA</option>
+	    <option value="1641100" >AHETZEKO PILOTARIAK</option>
+	    <option value="1641011" >AHURTI PELOTE</option>
+	    <option value="1641090" >AIRETIK</option>
+	    <option value="1641901" >AMICALE DU CD64</option>
+	    <option value="1641057" >ARBONARRAK</option>
+	    <option value="1641070" >A.S. CHEMINOTS HENDAYAIS</option>
+	    <option value="1641066" >A.S.C. MUNICIPAUX BAYONNAIS</option>
+	    <option value="1641029" >AS LA NEGRESSE</option>
+	    <option value="1641063" >A.S. LES CHERUBINOTS</option>
+	    <option value="1641101" >AS MILAFRANGA</option>
+	    <option value="1641003" >ATHARRAZTARRAK</option>
+	    <option value="1641031" >ATZARRI</option>
+	    <option value="1641004" >AVIRON BAYONNAIS</option>
+	    <option value="1641061" >AZIA</option>
+	    <option value="1641002" >AZKAINDARRAK BAT</option>
+	    <option value="1641005" >BIARRITZ ATHLETIC CLUB</option>
+	    <option value="1641015" >BIARRITZ FRONTENIS CLUB</option>
+	    <option value="1641007" >BIARRITZTARRAK</option>
+	    <option value="1641008" >BIDACHE SPORTS</option>
+	    <option value="1641052" >BIEZ BAT</option>
+	    <option value="1641099" >BONNET NEVE A S C</option>
+	    <option value="1641050" >DASSAULT AVIATION A.S.C.</option>
+	    <option value="1641009" >DENEK BAT</option>
+	    <option value="1641049" >EMAK HOR</option>
+	    <option value="1641026" >ENDAIARRAK</option>
+	    <option value="1641103" >ERRO BAT</option>
+	    <option value="1641087" >ESKULARI A.S.</option>
+	    <option value="1641030" >ESKUZ ESKU</option>
+	    <option value="1641102" >ESQUIULE ATHLETIC CLUB</option>
+	    <option value="1641012" >GAZTIAK GOTEIN</option>
+	    <option value="1641010" >GOIZEKO IZARRA</option>
+	    <option value="1641058" >HARDOYTARRAK</option>
+	    <option value="1641044" >HIRIBURUKO AINHARA</option>
+	    <option value="1641013" >INTHALATZ</option>
+	    <option value="1641040" >IRISARTARRAK</option>
+	    <option value="1641014" >ITSASUARRAK</option>
+	    <option value="1641046" >JEANNE D'ARC PELOTE CLUB</option>
+	    <option value="1641017" >KANBOARRAK</option>
+	    <option value="1641016" >KAPITO HARRI</option>
+	    <option value="1641018" >KOSTAKOAK</option>
+	    <option value="1641062" >LA GUICHEUSE</option>
+	    <option value="1641086" >LAU HERRI</option>
+	    <option value="1641053" >LEHUNZTARRAK</option>
+	    <option value="1641039" >LES AIGLONS</option>
+	    <option value="1641065" >LOKARRI A.S.C.</option>
+	    <option value="1641019" >LUZEAN</option>
+	    <option value="1641069" >NAPURRAK</option>
+	    <option value="1641020" >NOIZBAIT</option>
+	    <option value="1641021" >OLHARROA</option>
+	    <option value="1641022" >OROK BAT</option>
+	    <option value="1641023" >OZTIBARTARRAK</option>
+	    <option value="1641041" >PERKAIN</option>
+	    <option value="1641047" >PILOTA HUTXA</option>
+	    <option value="1641902" >PORT DE BAYONNE</option>
+	    <option value="1641071" >RAIL BAYONNAIS</option>
+	    <option value="1641027" >S.A. MAULEONAIS</option>
+	    <option value="1641092" >SANOKI</option>
+	    <option value="1641025" >SARAKO IZARRA</option>
+	    <option value="1641032" >SOCIETE NAUTIQUE</option>
+	    <option value="1641006" >ST MARTIN PILOTA</option>
+	    <option value="1641024" >ST PEE U.C.</option>
+	    <option value="1641900" >SUEZ EAU DE FRANCE</option>
+	    <option value="1641033" >UHALDEAN</option>
+	    <option value="1641036" >URRUNARRAK</option>
+	    <option value="1641034" >U.S.S.P. AMIKUZE</option>
+	    <option value="1641903" >VILLE D ANGLET</option>
+	    <option value="1641038" >ZAHARRER SEGI</option>
+	    <option value="1641098" >ZIBURUKO GAZTEAK</option>
+	    <option value="1330000" class="mTitreSmall" disabled>*** COTE D'ARGENT ***</option>
+	    <option value="1330042" >AKITANIA Pelote Basque</option>
+	    <option value="1330055" >AMIS DE LA PEL.BASQUE-LE HAILLAN</option>
+	    <option value="1330008" >CLUB ATHLETIC MUNICIPAUX BDX</option>
+	    <option value="1330018" >PILOTARI CLUB VILLENAVAIS</option>
+	    <option value="1330001" >PILOTARIS ARCACHONNAIS</option>
+	    <option value="1330085" >XISTERA VILLENAVAIS</option>
+	    <option value="1400000" class="mTitreSmall" disabled>*** LANDES ***</option>
+	    <option value="1400019" >A.S. HOSSEGOR</option>
+	    <option value="1400002" >A.S PTT DAX</option>
+	    <option value="1400005" >CLUB AMICAL MORCENAIS</option>
+	    <option value="1400021" >ECUREUILS SEIGNOSSAIS</option>
+	    <option value="1400012" >FOY JEUNES ST MARTIN DE SEIGNANX</option>
+	    <option value="1400033" >FRONTON LABENNAIS</option>
+	    <option value="1400006" >FRONTON PORT DE LANNAIS</option>
+	    <option value="1400010" >FRONTON ST LONNAIS</option>
+	    <option value="1400087" >LES AMIS DU TRINQUET des CHARMILLES</option>
+	    <option value="1400027" >LOUS ESQUIROS DE BENESSE MAREMNE</option>
+	    <option value="1400081" >PAYS D'ORTHE MAIN NUE</option>
+	    <option value="1400077" >PELOTARI CLUB DE HASTINGUES</option>
+	    <option value="1400007" >PEYREHORADE SPORTS PELOTE</option>
+	    <option value="1400076" >PILOTA CLUB SAUBRIGUES J.S.</option>
+	    <option value="1400009" >PILOTARIAK ST ANDRE DE SEIGNANX</option>
+	    <option value="1400022" >SAINTE MARIE SPORTS</option>
+	    <option value="1400018" >SAUBUSSE SPORTS</option>
+	    <option value="1400029" >ST MARTIN DE HINX BIAROTTE SPORT</option>
+	    <option value="1400001" >U.S DAX</option>
+	    <option value="1400020" >U.S TOSSE PELOTE</option>
+	    <option value="1642000" class="mTitreSmall" disabled>*** BEARN ***</option>
+	    <option value="1642014" >AS BARETOUNAISE</option>
+	    <option value="1642027" >AVENIR DE BIZANOS</option>
+	    <option value="1642055" >BEAUMONT PAU LOTARI</option>
+	    <option value="1642049" >LESCAR PELOTARI CLUB</option>
+	    <option value="1642005" >LES JEUNES DE ST MARTIN SALIES</option>
+	    <option value="1642013" >NAVARRENX PELOTE</option>
+	    <option value="1642058" >PC OLORONAIS</option>
+	    <option value="1642002" >PELOTARI CLUB ORTHEZIEN</option>
+	    <option value="1642012" >PELOTARI CLUB PARDISIEN</option>
+	    <option value="1642051" >PELOTE OGEULOISE</option>
+	    <option value="1642001" >SECTION PALOISE</option>
+	    <option value="1642004" >STADE SALISIEN</option>
+	    <option value="1642010" >U.S SAUVETERIENNE</option>
+	    <option value="2310000" class="mTitreSmall" disabled>*** OCCITANIE ***</option>
+	    <option value="2310045" >A.S. FRONTON LUCHON</option>
+	    <option value="2310004" >CLUB ARIEGE PYRENEES</option>
+	    <option value="2310012" >TOULOUSE O.A.C</option>
+	    <option value="3750000" class="mTitreSmall" disabled>*** ILE DE FRANCE ***</option>
+	    <option value="3750028" >PARIS CHISTERA</option>
+	    <option value="3750021" >PARIS PELOTE BASQUE</option>
+	    <option value="3750022" >PILOTARI - PARIS</option>
+	    <option value="" class="mTitreSmall" disabled>*** 3 920 ***</option>
+	    <option value="3920013" >Châtillon Pelote Basque 92</option>
+	    <option value="5060000" class="mTitreSmall" disabled>*** PROVENCE-ALPES COTE D'AZUR ***</option>
+	    <option value="5060001" >CANNES PELOTE BASQUE</option>
+	    <option value="99999000" class="mTitreSmall" disabled>*** EUSKADI ***</option>
+	    <option value="99999019" >ABADINO PILOTA TALDEA</option>
+	    <option value="99999005" >ADURZA</option>
+	    <option value="99999047" >ALDE ZAHARRA</option>
+	    <option value="99999007" >AMETSA PILOTA</option>
+	    <option value="99999017" >ARDOI PILOTA TALDEA</option>
+	    <option value="99999015" >ATXARTE-ABADIÑO</option>
+	    <option value="99999045" >AUNAMENDI</option>
+	    <option value="99999001" >BEHAR ZANA</option>
+	    <option value="99999034" >BEOTIBAR</option>
+	    <option value="99999046" >BETI ONAK</option>
+	    <option value="99999039" >C.D MENDILLORRIKO</option>
+	    <option value="99999041" >CLUB PELOTAZALE DE PRADEJON</option>
+	    <option value="99999014" >CLUB TENIS - PAMPELUNE</option>
+	    <option value="99999035" >DANOK BAT</option>
+	    <option value="99999033" >DONOSTIA Jai Alai</option>
+	    <option value="99999044" >ELORRIO HORI HORI</option>
+	    <option value="99999043" >ERRENTERIA</option>
+	    <option value="99999048" >ESTERIBAR</option>
+	    <option value="99999006" >GIRIZIA</option>
+	    <option value="99999037" >HERNANI</option>
+	    <option value="99999038" >HONDARRABIKO PILOTA TALDEA</option>
+	    <option value="99999016" >IOAR</option>
+	    <option value="99999002" >IRURITA</option>
+	    <option value="99999027" >KURENE</option>
+	    <option value="99999003" >KURPIL KIROLAK</option>
+	    <option value="99999020" >LAXOA PILOTA ELKARTEA</option>
+	    <option value="99999022" >LEKU ONA</option>
+	    <option value="99999008" >MAESTU</option>
+	    <option value="99999011" >MAITENA</option>
+	    <option value="99999036" >MALLE EUSKAL PILOTA KLUBA</option>
+	    <option value="99999010" >MITXELIN</option>
+	    <option value="99999042" >NOAIN JAI ALAI</option>
+	    <option value="99999023" >OBERENA</option>
+	    <option value="99999025" >OIARPE</option>
+	    <option value="99999028" >OIZPE</option>
+	    <option value="99999024" >PAZ DE ZIGANDA IKASTOLA</option>
+	    <option value="99999029" >PLAZAOLA</option>
+	    <option value="99999012" >RAMUNTXO</option>
+	    <option value="99999013" >REAL SOCIEDAD - SAN SEBASTIAN</option>
+	    <option value="99999021" >SU-BERRI PKE</option>
+	    <option value="99999026" >TORNOSOLO PILOTA TALDEA</option>
+	    <option value="99999018" >TXARUTA PILOTA ELKARTEA</option>
+	    <option value="99999030" >TXOST</option>
+	    <option value="99999040" >URNIETAKO KIROL ELKARTEA</option>
+	    <option value="99999031" >ZARAMAGA</option>
+	    <option value="99999009" >ZIDORRA</option>
+	    <option value="99999004" >ZUBIETA</option>
+	    <option value="99999032" >ZUMAIA</option>
+	    <option value="" class="mTitreSmall" disabled>*** Admin Fede ***</option>
+    </select>
+			</td>
+		    </tr>
+		    </tr>
+		    <tr>
+			<td align="right">
+			    &nbsp;Date&nbsp;<br />
+			    <span class="small">(jj/mm/aaaa)</span>
+			</td>
+			<td colspan="3">
+			    			    du <input type="text" name="InDate" value="" size="10" maxlength="10" OnBlur="submit" class="datepicker">
+			    			    au <input type="text" name="InDatef" value="" size="10" maxlength="10" OnBlur="submit" class="datepicker">
+			    <SELECT NAME="InCat" OnChange="">
+	    <OPTION VALUE="0" class="mTitreSmall">Toutes cat&eacute;gories</OPTION>
+			<OPTION VALUE="1">1ère Série - 1.Maila</OPTION>
+			<OPTION VALUE="2">2ème Série - 2.Maila</OPTION>
+			<OPTION VALUE="3">3ème Série - 3.Maila</OPTION>
+			<OPTION VALUE="5">M22 - Juniors - Artekoak</OPTION>
+			<OPTION VALUE="6">M19 - Cadets - Gazteak</OPTION>
+			<OPTION VALUE="7">M16 - Minimes - Gaztetxoak</OPTION>
+			<OPTION VALUE="8">M14 - Benjamins - Kimuak</OPTION>
+			<OPTION VALUE="9">M12 - Poussins - Umetxoak</OPTION>
+	    </SELECT>			</td>
+		    </tr>
+		    <tr>
+			<td align="right">Phase</td>
+			<td colspan="2">
+ <SELECT NAME="InPhase" OnChange=" submit();">
+	    <OPTION VALUE="0" class="mTitreSmall">Toutes phases</OPTION>
+			<OPTION VALUE="1">Poules</OPTION>
+			<OPTION VALUE="2">Barrage</OPTION>
+			<OPTION VALUE="3">Barrage 1er tour</OPTION>
+			<OPTION VALUE="4">Barrage 2ème tour</OPTION>
+			<OPTION VALUE="5">Barrage 3ème tour</OPTION>
+			<OPTION VALUE="6">Barrage MAINTIEN</OPTION>
+			<OPTION VALUE="7">1/32ème de finale</OPTION>
+			<OPTION VALUE="8">1/16ème de finale</OPTION>
+			<OPTION VALUE="9">1/8ème de finale</OPTION>
+			<OPTION VALUE="10">1/4 de finale</OPTION>
+			<OPTION VALUE="11">1/2 finale</OPTION>
+			<OPTION VALUE="12">Finale</OPTION>
+			<OPTION VALUE="13">Champion</OPTION>
+	    </SELECT> 			</td>
+			<td align="center">
+			    <input type="submit" class="GTitre" name="InVoir" value="Voir les r&eacute;sultats">
+			</td>
+		    </tr>
+		</table>
+	    </td>
+	</tr>
+    </table>
+</form>
+<br />
+
+<table cellpadding="5"><tr><td class="erreur">
+		Pas de résultat pour cette sélection</td></tr></table></div>
+</body>
+</html>

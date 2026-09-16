@@ -2,6 +2,7 @@
   background: linear-gradient(90deg, var(--pelota-green) 0%, var(--pelota-green-dark) 100%);
   color: var(--pelota-white);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
 }
 
 .header-inner {
@@ -9,6 +10,7 @@
   align-items: center;
   gap: 2rem;
   padding: 0.75rem 1rem;
+  position: relative;
 }
 
 .logo {
@@ -25,10 +27,75 @@
   }
 }
 
+// Hamburger button (hidden on desktop)
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: auto;
+  z-index: 1001;
+  
+  &:focus-visible {
+    outline: 3px solid var(--pelota-white);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 3px;
+  background: var(--pelota-white);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  
+  &.open:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  
+  &.open:nth-child(2) {
+    opacity: 0;
+  }
+  
+  &.open:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
 .nav {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+.nav-desktop {
+  // Desktop nav visible by default
+}
+
+.nav-mobile {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--pelota-green-dark);
+  padding: 1rem;
+  gap: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  
+  &.open {
+    max-height: 400px;
+    padding: 1rem;
+  }
 }
 
 .nav-link {
@@ -46,5 +113,20 @@
     background: var(--pelota-red);
     color: var(--pelota-white);
     text-decoration: none;
+  }
+}
+
+// Mobile breakpoint
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: flex;
+  }
+  
+  .nav-desktop {
+    display: none;
+  }
+  
+  .nav-mobile {
+    display: flex;
   }
 }

@@ -3,6 +3,30 @@
   color: var(--pelota-gray-700);
 }
 
+.search-bar {
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--pelota-gray-200);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--pelota-green);
+    box-shadow: 0 0 0 3px rgba(0, 140, 69, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--pelota-gray-700);
+  }
+}
+
 .team-list {
   list-style: none;
   padding: 0;

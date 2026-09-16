@@ -1,0 +1,86 @@
+{
+  "games": [
+    {
+      "no_renc": "151699",
+      "date": "04/10/2025",
+      "club1_name": "AIRETIK",
+      "club2_name": "URRUNARRAK",
+      "score": "31/40",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A Poule phase 1"
+    },
+    {
+      "no_renc": "151700",
+      "date": "04/10/2025",
+      "club1_name": "BIARRITZ",
+      "club2_name": "ST JEAN DE LUZ",
+      "score": "40/28",
+      "discipline_context": "CTPB 2026 - Trinquet - Cadets - Finale"
+    },
+    {
+      "no_renc": "151701",
+      "date": "05/10/2025",
+      "club1_name": "HENDAYE",
+      "club2_name": "BAYONNE",
+      "score": "35/37",
+      "discipline_context": "Place Libre/Chistera Joko Garbi - 2025-2026"
+    },
+    {
+      "no_renc": "151702",
+      "date": "05/10/2025",
+      "club1_name": "CAMBO",
+      "club2_name": "ESPELETTE",
+      "score": "40/31",
+      "discipline_context": "FFPB 2025 - Trinquet - M19 - Demi-finale"
+    },
+    {
+      "no_renc": "151703",
+      "date": "06/10/2025",
+      "club1_name": "ST PALAIS",
+      "club2_name": "MAULEON",
+      "score": "29/40",
+      "discipline_context": "Championnat Gazteak 2026 - Place Libre"
+    },
+    {
+      "no_renc": "151704",
+      "date": "06/10/2025",
+      "club1_name": "ANGLET",
+      "club2_name": "BIDART",
+      "score": "40/35",
+      "discipline_context": "CTPB - Groupe B2ème Série - Poule phase 2"
+    },
+    {
+      "no_renc": "151705",
+      "date": "07/10/2025",
+      "club1_name": "GUETHARY",
+      "club2_name": "ASCRAIN",
+      "score": "38/40",
+      "discipline_context": "Championnat 2025-2026 - Place Libre"
+    },
+    {
+      "no_renc": "151706",
+      "date": "07/10/2025",
+      "club1_name": "SOUBISE",
+      "club2_name": "TONNAY CHARENTE",
+      "score": "40/22",
+      "discipline_context": "CTPB 2026 - Main Nue - Seniors"
+    },
+    {
+      "no_renc": "151707",
+      "date": "08/10/2025",
+      "club1_name": "UCCIANI",
+      "club2_name": "OLMETO",
+      "score": "31/40",
+      "discipline_context": "1.MailaGROUPE A - Trinquet 2026"
+    },
+    {
+      "no_renc": "151708",
+      "date": "08/10/2025",
+      "club1_name": "CARNOULES",
+      "club2_name": "LA CRAU",
+      "score": "40/36",
+      "discipline_context": "FFPB M17 2025 - Chistera - Finale"
+    }
+  ],
+  "total": 5,
+  "note": "First 10 games from fixtures for quick testing"
+}

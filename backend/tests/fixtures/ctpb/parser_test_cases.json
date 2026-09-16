@@ -1,0 +1,171 @@
+{
+  "championship_names": [
+    {
+      "input": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A Poule phase 1",
+      "expected": {
+        "discipline": "Trinquet/Main Nue",
+        "group": "GROUPE A",
+        "series": "1ère Série",
+        "pool": "Poule phase 1"
+      },
+      "source": "manual"
+    },
+    {
+      "input": "CTPB 2026 - Trinquet - Cadets - Finale",
+      "expected": {
+        "organization": "CTPB",
+        "season": "2026",
+        "year": 2026,
+        "discipline": "Trinquet",
+        "pool": "Finale",
+        "group": "Cadets"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "Place Libre/Chistera Joko Garbi - 2025-2026",
+      "expected": {
+        "discipline": "Place Libre/Chistera Joko Garbi",
+        "season": "2025-2026",
+        "year": 2026
+      },
+      "source": "manual"
+    },
+    {
+      "input": "FFPB 2025 - Trinquet - M19 - Demi-finale",
+      "expected": {
+        "organization": "FFPB",
+        "season": "2025",
+        "year": 2025,
+        "discipline": "Trinquet",
+        "pool": "Demi-finale",
+        "group": "M19"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "Championnat Gazteak 2026 - Place Libre",
+      "expected": {
+        "season": "2026",
+        "year": 2026,
+        "discipline": "Place Libre",
+        "group": "Gazteak"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "CTPB - Groupe B2ème Série - Poule phase 2",
+      "expected": {
+        "organization": "CTPB",
+        "group": "GROUPE B",
+        "series": "2ème Série",
+        "pool": "Poule phase 2"
+      },
+      "source": "manual"
+    },
+    {
+      "input": "Championnat 2025-2026 - Place Libre",
+      "expected": {
+        "season": "2025-2026",
+        "year": 2026,
+        "discipline": "Place Libre"
+      },
+      "source": "manual"
+    },
+    {
+      "input": "CTPB 2026 - Main Nue - Seniors",
+      "expected": {
+        "organization": "CTPB",
+        "season": "2026",
+        "year": 2026,
+        "discipline": "Main Nue"
+      },
+      "source": "manual",
+      "note": "Parser doesn't extract 'Seniors' as group"
+    },
+    {
+      "input": "1.MailaGROUPE A - Trinquet 2026",
+      "expected": {
+        "season": "2026",
+        "year": 2026,
+        "discipline": "Trinquet",
+        "series": "1.Maila",
+        "group": "GROUPE A"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "FFPB M17 2025 - Chistera - Finale",
+      "expected": {
+        "organization": "FFPB",
+        "season": "2025",
+        "year": 2025,
+        "discipline": "Chistera",
+        "pool": "Finale",
+        "group": "M17"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "Place Libre/Grand Chistera - 2026",
+      "expected": {
+        "season": "2026",
+        "year": 2026,
+        "discipline": "Place Libre/Grand Chistera"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "Championnat Poule A - Cadets 2025",
+      "expected": {
+        "season": "2025",
+        "year": 2025,
+        "pool": "Poule A",
+        "group": "Cadets"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "CTPB 2025-2026 - Trinquet/Main Nue - GROUPE A1ère Série - Poule phase 1",
+      "expected": {
+        "organization": "CTPB",
+        "season": "2025-2026",
+        "year": 2026,
+        "discipline": "Trinquet/Main Nue",
+        "group": "GROUPE A",
+        "series": "1ère Série",
+        "pool": "Poule phase 1"
+      },
+      "source": "manual"
+    },
+    {
+      "input": "Comité Basque 2025 - Place Libre",
+      "expected": {
+        "organization": "Comité",
+        "season": "2025",
+        "year": 2025,
+        "discipline": "Place Libre"
+      },
+      "source": "manual",
+      "note": "Parser adds 'season' for single year"
+    },
+    {
+      "input": "Championnat 25-26 - Trinquet/Main Nue",
+      "expected": {
+        "discipline": "Trinquet/Main Nue"
+      },
+      "source": "manual",
+      "note": "Short season format - parser extracts discipline only"
+    }
+  ],
+  "generated_at": "2026-03-30T08:14:00+00:00",
+  "source_games_count": 5,
+  "note": "Manual test cases covering known CTPB/FFPB championship name formats. Expected values reflect actual parser behavior. Run save_fixtures.py to auto-generate from live scrape."
+}

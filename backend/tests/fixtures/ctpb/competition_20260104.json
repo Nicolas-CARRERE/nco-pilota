@@ -1,0 +1,129 @@
+{
+  "competition_value": "20260104",
+  "competition_label": "Trinquet - Seniors",
+  "fetched_at": "2026-03-30T09:19:50.332945",
+  "games_count": 7592,
+  "html_length": 5558004,
+  "games": [
+    {
+      "no_renc": "151699",
+      "date": "04/10/2025",
+      "club1_name": "AIRETIK",
+      "club2_name": "URRUNARRAK",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "31/40",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151698",
+      "date": "05/10/2025",
+      "club1_name": "ZAHARRER SEGI",
+      "club2_name": "ATZARRI",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "40/21",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151701",
+      "date": "10/10/2025",
+      "club1_name": "AIRETIK",
+      "club2_name": "ATZARRI",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "40/25",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151700",
+      "date": "12/10/2025",
+      "club1_name": "URRUNARRAK",
+      "club2_name": "ZAHARRER SEGI",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "19/40",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151702",
+      "date": "18/10/2025",
+      "club1_name": "ZAHARRER SEGI",
+      "club2_name": "AIRETIK",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "24/40",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151703",
+      "date": "18/10/2025",
+      "club1_name": "ATZARRI",
+      "club2_name": "URRUNARRAK",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "18/40",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151705",
+      "date": "03/10/2025",
+      "club1_name": "SARAKO IZARRA",
+      "club2_name": "NOIZBAIT",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "40/37",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151704",
+      "date": "05/10/2025",
+      "club1_name": "URRUNARRAK",
+      "club2_name": "ATZARRI",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "40/21",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151706",
+      "date": "10/10/2025",
+      "club1_name": "NOIZBAIT",
+      "club2_name": "URRUNARRAK",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "08/40",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    },
+    {
+      "no_renc": "151707",
+      "date": "11/10/2025",
+      "club1_name": "SARAKO IZARRA",
+      "club2_name": "ATZARRI",
+      "club1_players": [],
+      "club2_players": [],
+      "raw_score": "40/16",
+      "comment": "",
+      "status": "completed",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A\t\t\t    Poule phase 1"
+    }
+  ]
+}

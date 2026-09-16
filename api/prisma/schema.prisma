@@ -13,6 +13,7 @@ datasource db {
 // === Reference tables (sport structure) ===
 
 model Modality {
+  @@map("modality")
   id          String   @id @default(uuid())
   name        String
   description String?
@@ -20,6 +21,7 @@ model Modality {
 }
 
 model AgeCategory {
+  @@map("age_category")
   id          String   @id @default(uuid())
   name        String
   shortName   String?  @map("short_name")
@@ -32,6 +34,7 @@ model AgeCategory {
 }
 
 model CompetitionGender {
+  @@map("competition_gender")
   id          String   @id @default(uuid())
   name        String
   code        String   @db.VarChar(2)
@@ -40,6 +43,7 @@ model CompetitionGender {
 }
 
 model Discipline {
+  @@map("discipline")
   id              String   @id @default(uuid())
   name            String
   modalityId      String   @map("modality_id")
@@ -53,6 +57,7 @@ model Discipline {
 }
 
 model CompetitionSeries {
+  @@map("competition_series")
   id               String   @id @default(uuid())
   code             String   @unique
   name             String
@@ -62,6 +67,7 @@ model CompetitionSeries {
 }
 
 model Organizer {
+  @@map("organizer")
   id          String   @id @default(uuid())
   name        String
   shortName   String?  @map("short_name")
@@ -74,6 +80,7 @@ model Organizer {
 }
 
 model CompetitionYear {
+  @@map("competition_year")
   id         String   @id @default(uuid())
   year       Int
   isCurrent  Boolean  @default(false) @map("is_current")
@@ -96,6 +103,7 @@ model Club {
 }
 
 model Player {
+  @@map("player")
   id            String   @id @default(uuid())
   firstName     String   @map("first_name")
   lastName      String   @map("last_name")
@@ -117,6 +125,7 @@ model Player {
 }
 
 model PlayerClubHistory {
+  @@map("player_club_history")
   id        String   @id @default(uuid())
   playerId  String   @map("player_id")
   clubId    String   @map("club_id")
@@ -128,6 +137,7 @@ model PlayerClubHistory {
 }
 
 model Team {
+  @@map("team")
   id              String   @id @default(uuid())
   clubId          String?  @map("club_id")
   name            String
@@ -141,6 +151,7 @@ model Team {
 }
 
 model TeamPlayer {
+  @@map("team_player")
   teamId   String @map("team_id")
   playerId String @map("player_id")
   role     String?
@@ -150,6 +161,7 @@ model TeamPlayer {
 }
 
 model Competition {
+  @@map("competition")
   id              String   @id @default(uuid())
   seriesId        String?  @map("series_id")
   disciplineId    String   @map("discipline_id")
@@ -163,16 +175,25 @@ model Competition {
   country         String?
   status          String   // upcoming, ongoing, completed, cancelled
   phase           String?
-  series          CompetitionSeries? @relation(fields: [seriesId], references: [id])
-  discipline      Discipline @relation(fields: [disciplineId], references: [id])
-  year            CompetitionYear @relation(fields: [yearId], references: [id])
-  organizer       Organizer @relation(fields: [organizerId], references: [id])
+  // Enhanced championship fields (parsed from championship name)
+  discipline      String?  // Place Libre, Trinquet, Main Nue, etc.
+  season          String?  // 2026
+  year            Int?     // 2026
+  series          String?  // 1ère Série - 1.Maila
+  group           String?  // GROUPE A, M19, Cadets, Gazteak
+  pool            String?  // Poule phase 1, Finale
+  organization    String?  // CTPB, FFPB
+  seriesRelation  CompetitionSeries? @relation(fields: [seriesId], references: [id])
+  disciplineRelation      Discipline @relation(fields: [disciplineId], references: [id])
+  yearRelation            CompetitionYear @relation(fields: [yearId], references: [id])
+  organizerRelation       Organizer @relation(fields: [organizerId], references: [id])
   ageCategory     AgeCategory? @relation(fields: [ageCategoryId], references: [id])
   gender          CompetitionGender? @relation(fields: [genderId], references: [id])
   games           Game[]
 }
 
 model Court {
+  @@map("court")
   id        String   @id @default(uuid())
   name      String
   city      String
@@ -182,6 +203,7 @@ model Court {
 }
 
 model Game {
+  @@map("game")
   id              String   @id @default(uuid())
   competitionId   String   @map("competition_id")
   seriesId        String?  @map("series_id")
@@ -210,6 +232,7 @@ model Game {
 }
 
 model GameSidePlayer {
+  @@map("game_side_player")
   gameId       String  @map("game_id")
   playerId    String  @map("player_id")
   side        Int     // 1 = first team (e.g. club1), 2 = second team (e.g. club2)
@@ -220,6 +243,7 @@ model GameSidePlayer {
 }
 
 model GameScore {
+  @@map("game_score")
   id                    String   @id @default(uuid())
   gameId                String   @map("game_id")
   rawScore              String   @map("raw_score") @db.VarChar(50)
@@ -235,6 +259,7 @@ model GameScore {
 }
 
 model PlayerStat {
+  @@map("player_stat")
   id                  String   @id @default(uuid())
   playerId            String   @map("player_id")
   gameId              String   @map("game_id")
@@ -255,6 +280,7 @@ model PlayerStat {
 // === Scraping metadata (optional tracking) ===
 
 model Source {
+  @@map("source")
   id                    String   @id @default(uuid())
   name                  String
   url                   String?
@@ -271,6 +297,7 @@ model Source {
 }
 
 model ScrapedFilterOption {
+  @@map("scraped_filter_option")
   id               String             @id @default(uuid())
   sourceId         String             @map("source_id")
   kind             String             // competition, city, club, category, phase (no specialty)
@@ -282,6 +309,7 @@ model ScrapedFilterOption {
 }
 
 model ScrapedSpecialty {
+  @@map("scraped_specialty")
   id                   String              @id @default(uuid())
   sourceId             String              @map("source_id")
   competitionOptionId  String              @map("competition_option_id")
@@ -293,6 +321,7 @@ model ScrapedSpecialty {
 }
 
 model ScrapingJobRun {
+  @@map("scraping_job_run")
   id          String   @id @default(uuid())
   sourceId    String   @map("source_id")
   url         String

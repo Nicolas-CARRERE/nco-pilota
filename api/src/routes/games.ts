@@ -161,7 +161,7 @@ router.get("/:id", async (request: Request, response: Response) => {
         player1: true,
         player2: true,
         winner: true,
-        competition: { include: { organizer: true, discipline: true } },
+        competition: { include: { organizerRelation: true, disciplineRelation: true } },
         court: true,
         gameScores: true,
         sidePlayers: {

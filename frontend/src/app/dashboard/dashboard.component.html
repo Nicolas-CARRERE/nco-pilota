@@ -1,19 +1,17 @@
 <div class="dashboard">
   <header class="dashboard-header">
     <h1>Dashboard</h1>
-    <button (click)="toggleSidebar()" class="sidebar-toggle">
-      {{ sidebarCollapsed ? 'Show Filters' : 'Hide Filters' }}
+    <button (click)="toggleSidebar()" class="sidebar-toggle" aria-label="Afficher/masquer les filtres">
+      {{ sidebarCollapsed ? 'Afficher filtres' : 'Masquer filtres' }}
     </button>
   </header>
 
   <div class="dashboard-content">
-    @if (!sidebarCollapsed) {
-      <aside class="filters-sidebar">
-        <app-filter-panel></app-filter-panel>
-      </aside>
-    }
+    <aside class="filters-sidebar" [class.sidebar-hidden]="sidebarCollapsed">
+      <app-filter-panel></app-filter-panel>
+    </aside>
 
-    <main class="dashboard-main">
+    <main class="dashboard-main" [class.sidebar-open]="!sidebarCollapsed" (click)="onMainClick()">
       <app-stats-summary></app-stats-summary>
 
       <div class="charts-grid">

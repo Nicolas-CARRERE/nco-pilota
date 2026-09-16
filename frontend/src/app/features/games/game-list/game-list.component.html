@@ -11,17 +11,17 @@
   @if (loading) {
     <app-loading></app-loading>
   } @else if (error) {
-    <div class="error-message">
+    <div class="error-message" role="alert">
       <p>{{ error }}</p>
       <button type="button" class="btn btn--outline" (click)="loadGames()">Réessayer</button>
     </div>
   } @else if (games.length === 0) {
     <p>Aucune partie trouvée.</p>
   } @else {
-    <ul class="game-list">
+    <ul class="game-list" role="list" aria-label="Liste des parties">
       @for (g of games; track g.id) {
-        <li class="card game-card">
-          <a [routerLink]="['/games', g.id]" class="game-card-link">
+        <li class="card game-card" role="listitem">
+          <a [routerLink]="['/games', g.id]" class="game-card-link" [attr.aria-label]="'Voir les détails de la partie du ' + (g.startDate | formatDate)">
             <span class="game-date">{{ g.startDate | formatDate }}</span>
             <div class="game-versus">
               {{ formatVersus(g) }}
@@ -30,15 +30,15 @@
             @if (g.phase ?? g.competition.phase; as phaseLabel) {
               <span class="game-phase">{{ phaseLabel }}</span>
             }
-            <span class="status" [class]="'status-' + g.status">{{ g.status }}</span>
+            <span class="status" [class]="'status-' + g.status" [attr.aria-label]="'Statut: ' + g.status">{{ g.status }}</span>
           </a>
         </li>
       }
     </ul>
-    <div class="pagination">
-      <button type="button" class="btn btn--outline" [disabled]="offset === 0" (click)="pagePrev()">Précédent</button>
-      <span class="pagination-info">{{ offset + 1 }} – {{ offset + games.length }} / {{ total }}</span>
-      <button type="button" class="btn btn--outline" [disabled]="offset + limit >= total" (click)="pageNext()">Suivant</button>
+    <div class="pagination" role="navigation" aria-label="Pagination">
+      <button type="button" class="btn btn--outline" [disabled]="offset === 0" (click)="pagePrev()" aria-label="Page précédente">Précédent</button>
+      <span class="pagination-info" aria-live="polite">{{ offset + 1 }} – {{ offset + games.length }} / {{ total }}</span>
+      <button type="button" class="btn btn--outline" [disabled]="offset + limit >= total" (click)="pageNext()" aria-label="Page suivante">Suivant</button>
     </div>
   }
 </div>

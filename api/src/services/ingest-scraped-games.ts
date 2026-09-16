@@ -4,6 +4,7 @@
  */
 
 import { PrismaClient } from "@prisma/client";
+import { parseChampionshipName } from "../utils/championship-parser.js";
 
 const prisma = new PrismaClient();
 
@@ -126,12 +127,17 @@ async function ensureCompetition(
   disciplineId: string,
   yearId: string,
   startDate: Date,
+  championshipName?: string,
 ): Promise<string> {
   const existing = await prisma.competition.findFirst({
     where: { organizerId, yearId, disciplineId },
     select: { id: true },
   });
   if (existing) return existing.id;
+  
+  // Parse championship name to extract granular fields
+  const parsed = championshipName ? parseChampionshipName(championshipName) : {};
+  
   const created = await prisma.competition.create({
     data: {
       organizerId,
@@ -140,6 +146,13 @@ async function ensureCompetition(
       startDate,
       endDate: startDate,
       status: "ongoing",
+      discipline: parsed.discipline || undefined,
+      season: parsed.season || undefined,
+      year: parsed.year || undefined,
+      series: parsed.series || undefined,
+      group: parsed.group || undefined,
+      pool: parsed.pool || undefined,
+      organization: parsed.organization || undefined,
     },
     select: { id: true },
   });
@@ -297,10 +310,12 @@ async function ensurePlayer(
  * Ensure default competition for a source (organizer + discipline + year + competition).
  * Returns competitionId and disciplineId for use when ensuring teams.
  * @param disciplineName - Optional discipline name (e.g. "Trinquet", "Mur à gauche"). Defaults to "Mur à gauche".
+ * @param championshipName - Optional full championship name for granular field parsing.
  */
 export async function ensureDefaultCompetition(
   sourceId: string,
   disciplineName?: string,
+  championshipName?: string,
 ): Promise<{ competitionId: string; disciplineId: string }> {
   const source = await prisma.source.findUnique({
     where: { id: sourceId },
@@ -314,7 +329,7 @@ export async function ensureDefaultCompetition(
   const year = new Date().getFullYear();
   const yearId = await ensureCompetitionYear(year);
   const startDate = new Date(year, 0, 1);
-  const competitionId = await ensureCompetition(organizerId, disciplineId, yearId, startDate);
+  const competitionId = await ensureCompetition(organizerId, disciplineId, yearId, startDate, championshipName);
   return { competitionId, disciplineId };
 }
 

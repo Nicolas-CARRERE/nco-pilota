@@ -11,6 +11,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
 
 from app.services.player_extraction import _parse_club_name_and_players, _parse_players_from_cell
+from app.services.championship_parser import parse_championship_name
 
 
 # -----------------------
@@ -45,25 +46,59 @@ def _infer_status(raw_score: str) -> str:
     return "unknown"
 
 
-# -----------------------
-# Resultats HTML parser
-# -----------------------
+def _extract_season_from_html(soup: BeautifulSoup) -> Dict[str, Any]:
+    """Extract season/year/organization info from HTML page header."""
+    result: Dict[str, Any] = {}
+    
+    # Extract organization from page title
+    title = soup.find("title")
+    if title:
+        title_text = title.get_text()
+        if "CTPB" in title_text or "Comité Territorial Pays Basque" in title_text:
+            result["organization"] = "CTPB"
+        elif "FFPB" in title_text:
+            result["organization"] = "FFPB"
+    
+    # Look for "SAISON 2026" or "2025/2026" patterns in the page
+    header = soup.find("h1")
+    if header:
+        text = header.get_text()
+        # Pattern: SAISON 2026
+        season_match = re.search(r"SAISON\s*(\d{4})", text)
+        if season_match:
+            year = int(season_match.group(1))
+            result["year"] = year
+            result["season"] = str(year)
+    
+    # Look for competition selector with season info (e.g., "Championnat d'Hiver 2025/2026")
+    for option in soup.find_all("option", selected=True):
+        text = option.get_text()
+        # Pattern: 2025/2026
+        span_match = re.search(r"(\d{4})/(\d{4})", text)
+        if span_match:
+            start_year = int(span_match.group(1))
+            end_year = int(span_match.group(2))
+            result["season"] = f"{start_year}-{end_year}"
+            result["year"] = end_year
+            break
+    
+    return result
 
-def parse_resultats_html(html: str) -> List[Dict[str, Any]]:
-    """Parse CTPB resultats.php HTML into structured game rows."""
-    soup = BeautifulSoup(html, "html.parser")
-    games: List[Dict[str, Any]] = []
-    current_discipline: str = ""
 
+def _extract_competition_context(soup: BeautifulSoup) -> Dict[str, Any]:
+    """Extract competition context from HTML including discipline headers."""
+    result: Dict[str, Any] = {}
+    
+    # Find the competition info row (colspan >= 7 with discipline text)
     table = soup.find("table", class_="mBloc")
     if not table:
-        return games
-
+        return result
+    
     for row in table.find_all("tr"):
         cells = row.find_all("td")
         if not cells:
             continue
-
+        
         first_cell = cells[0]
         colspan = first_cell.get("colspan")
         if colspan and int(colspan) >= 7:
@@ -79,7 +114,43 @@ def parse_resultats_html(html: str) -> List[Dict[str, Any]]:
                     or "mur a gauche" in text_lower
                     or "paleta" in text_lower
                 ):
-                    current_discipline = text
+                    # Parse the discipline_context using championship parser
+                    parsed = parse_championship_name(text)
+                    result.update(parsed)
+                    result["discipline_context"] = text
+                    break
+    
+    return result
+
+
+# -----------------------
+# Resultats HTML parser
+# -----------------------
+
+def parse_resultats_html(html: str) -> List[Dict[str, Any]]:
+    """Parse CTPB resultats.php HTML into structured game rows."""
+    soup = BeautifulSoup(html, "html.parser")
+    games: List[Dict[str, Any]] = []
+    
+    # Extract season/year from page header
+    page_context = _extract_season_from_html(soup)
+    
+    # Extract competition context (discipline, group, series, pool, etc.)
+    competition_context = _extract_competition_context(soup)
+    
+    table = soup.find("table", class_="mBloc")
+    if not table:
+        return games
+
+    for row in table.find_all("tr"):
+        cells = row.find_all("td")
+        if not cells:
+            continue
+
+        first_cell = cells[0]
+        colspan = first_cell.get("colspan")
+        if colspan and int(colspan) >= 7:
+            # Skip header rows - context already extracted above
             continue
 
         if first_cell.get("class") and "mTitreSmall" in first_cell.get("class", []):
@@ -102,7 +173,8 @@ def parse_resultats_html(html: str) -> List[Dict[str, Any]]:
         raw_score = _normalize_score(score_cell.get_text())
         comment = _normalize_score(comment_cell.get_text()) if comment_cell else ""
 
-        games.append({
+        # Build game record with all granular fields from HTML
+        game: Dict[str, Any] = {
             "no_renc": no_renc,
             "date": date_text,
             "club1_name": club1_name,
@@ -112,7 +184,14 @@ def parse_resultats_html(html: str) -> List[Dict[str, Any]]:
             "raw_score": raw_score,
             "comment": comment,
             "status": _infer_status(raw_score),
-            "discipline_context": current_discipline,
-        })
+        }
+        
+        # Add parsed championship fields
+        game.update(competition_context)
+        
+        # Add season/year from page context
+        game.update(page_context)
+
+        games.append(game)
 
     return games

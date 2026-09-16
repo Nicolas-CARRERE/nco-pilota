@@ -441,9 +441,9 @@ router.get("/competitions", async (request: Request, response: Response) => {
       where: { id: { in: compIds } },
       select: {
         id: true,
-        series: { select: { name: true } },
-        discipline: { select: { name: true } },
-        year: { select: { year: true } },
+        seriesRelation: { select: { name: true } },
+        disciplineRelation: { select: { name: true } },
+        yearRelation: { select: { year: true } },
       },
     });
 
@@ -452,7 +452,7 @@ router.get("/competitions", async (request: Request, response: Response) => {
       return {
         competition_id: g.competitionId,
         competition_name: comp
-          ? `${comp.series?.name || ""} ${comp.discipline?.name || ""} ${comp.year?.year || ""}`.trim()
+          ? `${comp.seriesRelation?.name || ""} ${comp.disciplineRelation?.name || ""} ${comp.yearRelation?.year || ""}`.trim()
           : g.competitionId,
         games_count: g._count.id,
       };
@@ -505,7 +505,7 @@ router.get("/disciplines", async (request: Request, response: Response) => {
         competition: {
           select: {
             disciplineId: true,
-            discipline: { select: { name: true } },
+            disciplineRelation: { select: { name: true } },
           },
         },
       },
@@ -515,7 +515,7 @@ router.get("/disciplines", async (request: Request, response: Response) => {
 
     for (const game of games) {
       const did = game.competition.disciplineId;
-      const dname = game.competition.discipline?.name || "Unknown";
+      const dname = game.competition.disciplineRelation?.name || "Unknown";
       if (!discStats[did]) discStats[did] = { name: dname, count: 0 };
       discStats[did].count += 1;
     }

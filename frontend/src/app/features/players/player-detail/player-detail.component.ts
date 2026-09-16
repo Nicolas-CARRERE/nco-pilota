@@ -4,11 +4,12 @@ import { PlayersService } from '../../../core/services/players.service';
 import { PlayerDetail, PlayerDetailGame } from '../../../shared/models/player.model';
 import { FormatDatePipe } from '../../../shared/pipes/format-date.pipe';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-player-detail',
   standalone: true,
-  imports: [RouterLink, FormatDatePipe, LoadingComponent],
+  imports: [RouterLink, FormatDatePipe, LoadingComponent, BreadcrumbComponent],
   templateUrl: './player-detail.component.html',
   styleUrl: './player-detail.component.scss',
 })
@@ -16,6 +17,10 @@ export class PlayerDetailComponent implements OnInit {
   player: PlayerDetail | null = null;
   loading = true;
   error: string | null = null;
+  breadcrumbs: BreadcrumbItem[] = [
+    { label: 'Accueil', link: '/' },
+    { label: 'Joueurs', link: '/players' },
+  ];
 
   constructor(
     private route: ActivatedRoute,

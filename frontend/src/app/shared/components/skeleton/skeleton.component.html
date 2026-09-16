@@ -1,0 +1,21 @@
+@for (item of [].constructor(count); track $index) {
+  @if (variant === 'card') {
+    <div class="skeleton skeleton-card" [style.height]="height">
+      <div class="skeleton-line skeleton-line--title"></div>
+      <div class="skeleton-line skeleton-line--text"></div>
+      <div class="skeleton-line skeleton-line--text skeleton-line--short"></div>
+    </div>
+  } @else if (variant === 'list') {
+    <div class="skeleton skeleton-list-item">
+      <div class="skeleton-line skeleton-line--full"></div>
+    </div>
+  } @else if (variant === 'text') {
+    <div class="skeleton skeleton-text">
+      @for (line of [].constructor(lines); track $index) {
+        <div class="skeleton-line" [class.skeleton-line--short]="$index === lines - 1"></div>
+      }
+    </div>
+  } @else if (variant === 'avatar') {
+    <div class="skeleton skeleton-avatar"></div>
+  }
+}

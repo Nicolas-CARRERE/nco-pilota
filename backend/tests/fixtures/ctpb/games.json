@@ -1,0 +1,67 @@
+{
+  "games": [
+    {
+      "no_renc": "151699",
+      "date": "04/10/2025",
+      "club1_name": "AIRETIK",
+      "club2_name": "URRUNARRAK",
+      "score": "31/40",
+      "discipline_context": "Trinquet/Main Nue - Groupe A1ère Série - 1.MailaGROUPE A Poule phase 1",
+      "competition": "20260102",
+      "specialty": "11",
+      "category": "Seniors",
+      "phase": "Poule phase 1"
+    },
+    {
+      "no_renc": "151700",
+      "date": "04/10/2025",
+      "club1_name": "BIARRITZ",
+      "club2_name": "ST JEAN DE LUZ",
+      "score": "40/28",
+      "discipline_context": "CTPB 2026 - Trinquet - Cadets - Finale",
+      "competition": "20260102",
+      "specialty": "11",
+      "category": "Cadets",
+      "phase": "Finale"
+    },
+    {
+      "no_renc": "151701",
+      "date": "05/10/2025",
+      "club1_name": "HENDAYE",
+      "club2_name": "BAYONNE",
+      "score": "35/37",
+      "discipline_context": "Place Libre/Chistera Joko Garbi - 2025-2026",
+      "competition": "20260104",
+      "specialty": "13",
+      "category": "Seniors",
+      "phase": "Poule A"
+    },
+    {
+      "no_renc": "151702",
+      "date": "05/10/2025",
+      "club1_name": "CAMBO",
+      "club2_name": "ESPELETTE",
+      "score": "40/31",
+      "discipline_context": "FFPB 2025 - Trinquet - M19 - Demi-finale",
+      "competition": "20260104",
+      "specialty": "13",
+      "category": "M19",
+      "phase": "Demi-finale"
+    },
+    {
+      "no_renc": "151703",
+      "date": "06/10/2025",
+      "club1_name": "ST PALAIS",
+      "club2_name": "MAULEON",
+      "score": "29/40",
+      "discipline_context": "Championnat Gazteak 2026 - Place Libre",
+      "competition": "20260102",
+      "specialty": "11",
+      "category": "Gazteak",
+      "phase": "Poule B"
+    }
+  ],
+  "scraped_at": "2026-03-30T08:14:00+00:00",
+  "source": "manual_sample",
+  "note": "Sample fixtures for testing. Run save_fixtures.py to update from live scrape."
+}

@@ -1,0 +1,16 @@
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+  <ol class="breadcrumb-list" role="list">
+    @for (item of items; track $index) {
+      <li class="breadcrumb-item" [class.active]="$index === items.length - 1">
+        @if (item.link && $index < items.length - 1) {
+          <a [routerLink]="item.link" [attr.aria-label]="item.label">{{ item.label }}</a>
+        } @else {
+          <span aria-current="page">{{ item.label }}</span>
+        }
+        @if ($index < items.length - 1) {
+          <span class="breadcrumb-separator" aria-hidden="true">›</span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

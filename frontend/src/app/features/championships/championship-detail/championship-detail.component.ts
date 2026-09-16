@@ -5,11 +5,12 @@ import { CompetitionDetail } from '../../../shared/models/competition.model';
 import { formatGameVersus } from '../../../shared/utils/game-format';
 import { FormatDatePipe } from '../../../shared/pipes/format-date.pipe';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { BreadcrumbComponent, BreadcrumbItem } from '../../../shared/components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-championship-detail',
   standalone: true,
-  imports: [RouterLink, FormatDatePipe, LoadingComponent],
+  imports: [RouterLink, FormatDatePipe, LoadingComponent, BreadcrumbComponent],
   templateUrl: './championship-detail.component.html',
   styleUrl: './championship-detail.component.scss',
 })
@@ -17,6 +18,10 @@ export class ChampionshipDetailComponent implements OnInit {
   competition: CompetitionDetail | null = null;
   loading = true;
   error: string | null = null;
+  breadcrumbs: BreadcrumbItem[] = [
+    { label: 'Accueil', link: '/' },
+    { label: 'Championnats', link: '/championships' },
+  ];
 
   constructor(
     private route: ActivatedRoute,

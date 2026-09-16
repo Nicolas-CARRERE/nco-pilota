@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: pilota_secret
       POSTGRES_DB: pilota
     ports:
-      - "5432:5432"
+      - "5436:5432"
     volumes:
       - pilota_db_data:/var/lib/postgresql/data
     healthcheck:
@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile
     container_name: pilota-backend
     ports:
-      - "8001:8001"
+      - "8003:8001"
     environment:
       DATABASE_URL: postgresql://pilota:pilota_secret@db:5432/pilota
       PYTHONUNBUFFERED: 1
@@ -62,7 +62,7 @@ services:
       dockerfile: Dockerfile
     container_name: pilota-frontend
     ports:
-      - "80:80"
+      - "8081:80"
     depends_on:
       - backend
 
@@ -72,9 +72,11 @@ services:
       dockerfile: Dockerfile
     container_name: pilota-api
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
-      DATABASE_URL: postgresql://pilota:pilota_secret@db:5432/pilota
+      PELOTA_POSTGRES_DATABASE_URL: postgresql://pilota:pilota_secret@db:5432/pilota
+      PELOTA_FASTAPI_SCRAPER_SERVICE_URL: http://backend:8001
+      PELOTA_API_SERVER_PORT: "3000"
     depends_on:
       db:
         condition: service_healthy
