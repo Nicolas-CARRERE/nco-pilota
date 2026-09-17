@@ -1,0 +1,33 @@
+name: backend
+
+# One workflow per service rather than one running all three suites: a change to
+# the scraper says nothing about the front end, and together they would make the
+# slowest suite the review time of every pull request. The paths filter applies the
+# same idea to a service that did not change.
+
+on:
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+
+jobs:
+  pytest:
+    name: pytest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The service declares its own dependencies and its test tools in
+      # backend/pyproject.toml (pytest and pytest-asyncio under [tool.uv]
+      # dev-dependencies), so uv is what runs the suite — pytest-asyncio is not in
+      # requirements.txt, and without it the async tests would not run.
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Run the tests
+        working-directory: backend
+        # The suite reads its fixtures from tests/fixtures/ctpb and reaches no
+        # network and no database: nothing else is needed here.
+        run: uv run pytest tests/ -v

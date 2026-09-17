@@ -1,0 +1,40 @@
+name: api
+
+# The Node API has no test file, so this checks that it still compiles — all the
+# repository can say about it today. Adding tests is its own task.
+
+on:
+  pull_request:
+    paths:
+      - 'api/**'
+      - '.github/workflows/api.yml'
+
+jobs:
+  build:
+    name: tsc
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # The same major as api/Dockerfile.
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - name: Install dependencies
+        working-directory: api
+        run: npm ci
+
+      - name: Generate the Prisma client
+        working-directory: api
+        # The client is generated, not committed, and tsc cannot check the code
+        # that imports it without this step. No database is needed for it.
+        run: npm run db:generate
+
+      - name: Compile
+        working-directory: api
+        run: npm run build
