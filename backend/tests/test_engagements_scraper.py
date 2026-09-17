@@ -124,6 +124,10 @@ class TestEngagementsScraperIntegration:
         # Skip by default - requires network and live site
         pytest.skip("Live test - requires network and live CTPB site")
     
+    @pytest.mark.skip(
+        reason="Live test - requires network and live CTPB site; "
+               "run it by hand while working on the redirect issue below"
+    )
     @pytest.mark.asyncio
     async def test_engagements_scrape_with_redirect(self):
         """
