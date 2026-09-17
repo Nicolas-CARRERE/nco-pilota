@@ -1,0 +1,39 @@
+name: frontend
+
+# Build then test: the build is what the compiler and the bundler have to say, and
+# `ng test` runs the accessibility spec, the only test file the front end has.
+
+on:
+  pull_request:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+
+jobs:
+  build-and-test:
+    name: ng build, ng test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # The same major as frontend/Dockerfile.
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: frontend
+        run: npm run build
+
+      - name: Test
+        working-directory: frontend
+        # Karma watches by default and would never exit.
+        run: npm test -- --watch=false --browsers=ChromeHeadless
