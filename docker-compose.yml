@@ -1,4 +1,12 @@
-version: '3.8'
+# Local development stack.
+#
+#   docker compose up --build
+#
+# Local only: the credentials below are development values, not deployable, and
+# nothing here is used in production.
+#
+# Once up: front end on http://localhost:8081, API on :3001, scraper on :8003,
+# PostgreSQL on :5436.
 
 services:
   db:
@@ -6,7 +14,9 @@ services:
     container_name: pilota-db
     environment:
       POSTGRES_USER: pilota
-      POSTGRES_PASSWORD: pilota_secret
+      # Single source of truth for the password: both database URLs below
+      # interpolate this same variable, so they cannot drift from it.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pilota_secret}
       POSTGRES_DB: pilota
     ports:
       - "5436:5432"
@@ -19,6 +29,10 @@ services:
       retries: 5
 
   backend:
+    # FastAPI scraping service. app/main.py mounts only the scraping router, so
+    # the HTTP app itself never opens a database connection; DATABASE_URL is read
+    # by app/config.py for the scripts under backend/scripts, which are run in
+    # this same container against the mounted code.
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -26,16 +40,18 @@ services:
     ports:
       - "8003:8001"
     environment:
-      DATABASE_URL: postgresql://pilota:pilota_secret@db:5432/pilota
       PYTHONUNBUFFERED: 1
+      DATABASE_URL: postgresql://pilota:${POSTGRES_PASSWORD:-pilota_secret}@db:5432/pilota
+      # CTPB's robots.txt disallows scraping; keep this guard on outside of a
+      # deliberate, authorised run.
+      CTPB_DEV_MODE: "true"
     depends_on:
       db:
         condition: service_healthy
     volumes:
+      # Code from the host, dependencies from the image.
       - ./backend:/app
-    command: >
-      sh -c "pip install -r requirements.txt &&
-             uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
 
   backend-test:
     build:
@@ -43,18 +59,51 @@ services:
       dockerfile: Dockerfile
     container_name: pilota-backend-test
     environment:
-      DATABASE_URL: postgresql://pilota:pilota_secret@db:5432/pilota
+      DATABASE_URL: postgresql://pilota:${POSTGRES_PASSWORD:-pilota_secret}@db:5432/pilota
       PYTHONUNBUFFERED: 1
-      CTPB_DEV_MODE: true
+      CTPB_DEV_MODE: "true"
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - ./backend:/app
+    # No network_mode here: sharing the database's network namespace would make
+    # the `db` hostname in the URL above unresolvable.
+    #
+    # pytest is not in requirements.txt, and the image is shared with the
+    # scraper, so it is installed here rather than in the image.
     command: >
-      sh -c "pip install -r requirements.txt &&
+      sh -c "pip install --no-cache-dir pytest &&
              pytest tests/ -v"
-    network_mode: "service:db"
+
+  api:
+    # Node.js API: owns the PostgreSQL schema, proxies scraping to the FastAPI
+    # service.
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: pilota-api
+    ports:
+      - "3001:3000"
+    environment:
+      # Spelled as api/prisma/schema.prisma reads it, not as DATABASE_URL.
+      PELOTA_POSTGRES_DATABASE_URL: postgresql://pilota:${POSTGRES_PASSWORD:-pilota_secret}@db:5432/pilota
+      PELOTA_FASTAPI_SCRAPER_SERVICE_URL: http://backend:8001
+      PELOTA_API_SERVER_PORT: "3000"
+      # The browser reaches the API through nginx on the same origin, so this
+      # stack makes no cross-origin call; kept for `ng serve` on :4200.
+      PELOTA_CORS_ORIGIN: http://localhost:4200
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    # A fresh volume has no tables, and the API owns the schema (Prisma), so the
+    # migration runs before the server. Local-stack choice: in deployment the
+    # migration is a separate step.
+    command: >
+      sh -c "npx prisma migrate deploy &&
+             node dist/index.js"
 
   frontend:
     build:
@@ -63,23 +112,11 @@ services:
     container_name: pilota-frontend
     ports:
       - "8081:80"
+    # The production build calls /api on its own origin (environment.prod.ts);
+    # nginx in this image proxies that prefix to the `api` service, a name that
+    # only resolves inside this compose network (frontend/nginx.conf).
     depends_on:
-      - backend
-
-  api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    container_name: pilota-api
-    ports:
-      - "3001:3000"
-    environment:
-      PELOTA_POSTGRES_DATABASE_URL: postgresql://pilota:pilota_secret@db:5432/pilota
-      PELOTA_FASTAPI_SCRAPER_SERVICE_URL: http://backend:8001
-      PELOTA_API_SERVER_PORT: "3000"
-    depends_on:
-      db:
-        condition: service_healthy
+      - api
 
 volumes:
   pilota_db_data:
