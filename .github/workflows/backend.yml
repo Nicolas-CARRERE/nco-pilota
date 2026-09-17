@@ -15,7 +15,13 @@ jobs:
   pytest:
     name: pytest
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # Ten minutes was the first value, and it is below what this job costs while
+    # main still carries the full competition_20260104.html: the suite spends about
+    # 53 s per parse of that page, ten minutes and a half in total. The ceiling is
+    # only there to kill a hung job, so it is set above the slow case rather than
+    # under it — PIL-20 brings the same suite to seconds, at which point the
+    # ceiling is never approached.
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
