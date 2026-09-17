@@ -254,14 +254,26 @@ pytest tests/test_ctpb_player_extraction.py -v
 
 ## Data Ingestion
 
-### Ingest Script
+### Where ingestion happens
+
+The Python service never touches the database — it is stateless and returns
+payloads. Persistence belongs to the Node API, which owns PostgreSQL through
+Prisma.
+
+Ingestion is what `POST /scrape/ctpb/pipeline` does on the Node API: it calls the
+scraper, then hands the payload to `ingestFromPipelineResult`
+(`api/src/services/ingest-scraped-games.ts`), which upserts the games, their
+players, clubs and scores.
 
 ```bash
-python ingest_with_players.py
+curl -X POST http://localhost:3000/scrape/ctpb/pipeline \
+  -H 'Content-Type: application/json' \
+  -d '{"already_scraped_urls": []}'
 ```
 
-**Input:** JSON file from scraper
-**Output:** PostgreSQL database with games + players
+**Input:** the scraper's payload — `raw_content.games[]`, one entry per match
+**Output:** rows in PostgreSQL, with `scoreComplete` and `scrapedFromUrl` set so a
+rescan can tell finished games from unfinished ones
 
 ### Database Tables
 
@@ -337,4 +349,4 @@ This scraper is for **development and testing purposes only**. Production scrapi
 - **Scraper code:** `app/services/scraper.py`
 - **Parser code:** `app/services/ctpb_parser.py`
 - **Tests:** `tests/test_ctpb_player_extraction.py`
-- **Ingestion:** `ingest_with_players.py`
+- **Ingestion:** `api/src/services/ingest-scraped-games.ts` (Node API)
