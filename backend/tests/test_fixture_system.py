@@ -92,8 +92,8 @@ class TestFixtureSystem:
         # Games should have required fields
         for game in games[:5]:  # Check first 5
             assert "game_number" in game or "date" in game
-            assert "club1" in game
-            assert "club2" in game
+            assert "club1_name" in game
+            assert "club2_name" in game
     
     def test_fixture_load_from_json(self):
         """Test loading fixtures from JSON format."""

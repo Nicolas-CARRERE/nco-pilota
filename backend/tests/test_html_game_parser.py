@@ -33,8 +33,8 @@ class TestHTMLGameParser:
         assert first_game['game_number'] == 1
         assert first_game['phase_letter'] == 'P'
         assert first_game['date'] == '04/10/2025'
-        assert first_game['club1'] == 'AIRETIK'
-        assert first_game['club2'] == 'URRUNARRAK'
+        assert first_game['club1_name'] == 'AIRETIK'
+        assert first_game['club2_name'] == 'URRUNARRAK'
         assert first_game['score_home'] == 31
         assert first_game['score_away'] == 40
     
@@ -55,8 +55,8 @@ class TestHTMLGameParser:
         assert 'game_number' in game
         assert 'phase_letter' in game
         assert 'date' in game
-        assert 'club1' in game
-        assert 'club2' in game
+        assert 'club1_name' in game
+        assert 'club2_name' in game
         assert 'score_home' in game
         assert 'score_away' in game
     
