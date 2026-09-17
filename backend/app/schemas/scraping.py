@@ -1,6 +1,6 @@
 """Pydantic schemas for scraping request/response contract."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Union
 from urllib.parse import urlencode, urlunparse
 
@@ -150,7 +150,7 @@ class ScrapeRunResponse(BaseModel):
     total_items: Optional[int] = Field(None, description="Number of items found")
     items_with_scores: Optional[int] = Field(None, description="Items that include scores")
     errors: List[ScrapeError] = Field(default_factory=list, description="Errors encountered")
-    started_at: datetime = Field(default_factory=datetime.utcnow)
+    started_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     ended_at: Optional[datetime] = None
 
 
