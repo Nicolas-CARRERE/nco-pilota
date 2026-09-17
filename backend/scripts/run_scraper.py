@@ -5,6 +5,7 @@ import argparse
 import asyncio
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
@@ -22,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from app.services.scraper import scrape_url
 from app.services.html_game_parser import parse_competition_html
-from app.config import get_settings
+from app.config import DATABASE_URL_VARIABLES, get_settings
 
 # Fixture directory for testing
 FIXTURES_DIR = Path(__file__).parent.parent / "tests" / "fixtures" / "ctpb"
@@ -87,7 +88,13 @@ async def main():
     args = parser.parse_args()
 
     settings = get_settings()
-    print(f"🔧 Database URL: {settings.database_url[:50]}...")
+    # Which variable supplied the URL, not the URL itself: this line used to print
+    # its first fifty characters, password included, into a terminal and any log
+    # that captured it.
+    print(
+        "🔧 Database URL: from "
+        + next((name for name in DATABASE_URL_VARIABLES if os.getenv(name)), "nothing set")
+    )
     
     # Handle fixture update mode
     if args.update_fixtures:
