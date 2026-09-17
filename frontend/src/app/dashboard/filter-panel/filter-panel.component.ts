@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterComponent, FilterConfig } from '../../shared/components/filter/filter.component';
-import { DashboardFilterService, DashboardFilters } from '../../core/services/filter.service';
+import { DashboardFilterStateService, DashboardFilters } from '../../core/services/dashboard-filter-state.service';
 
 @Component({
   selector: 'app-filter-panel',
@@ -20,7 +20,7 @@ export class FilterPanelComponent implements OnInit {
     compact: false,
   };
 
-  constructor(private filterService: DashboardFilterService) {}
+  constructor(private filterService: DashboardFilterStateService) {}
 
   ngOnInit(): void {
     this.filterService.getFilters().subscribe((f: DashboardFilters) => {

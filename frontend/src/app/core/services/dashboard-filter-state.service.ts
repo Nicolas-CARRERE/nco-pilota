@@ -1,3 +1,11 @@
+/**
+ * The dashboard's filter state: which filters are set, kept in memory and in
+ * localStorage.
+ *
+ * Not to be confused with FilterOptionsService, which fetches the values a filter
+ * could take. This one holds what the user chose; that one asks the API what is
+ * available.
+ */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -16,7 +24,7 @@ export interface DashboardFilters {
 const STORAGE_KEY = 'dashboard_filters';
 
 @Injectable({ providedIn: 'root' })
-export class DashboardFilterService {
+export class DashboardFilterStateService {
   private readonly defaultFilters: DashboardFilters = {};
   private filtersSubject = new BehaviorSubject<DashboardFilters>(this.defaultFilters);
 

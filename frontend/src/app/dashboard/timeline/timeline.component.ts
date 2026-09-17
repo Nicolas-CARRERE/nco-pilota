@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { StatsService, TimelineStats } from '../../core/services/stats.service';
-import { DashboardFilterService, DashboardFilters } from '../../core/services/filter.service';
+import { DashboardFilterStateService, DashboardFilters } from '../../core/services/dashboard-filter-state.service';
 
 @Component({
   selector: 'app-timeline',
@@ -26,7 +26,7 @@ export class TimelineComponent implements OnInit {
 
   public lineChartData: ChartData<'line'> = { labels: [], datasets: [{ data: [], label: 'Games Over Time' }] };
 
-  constructor(private statsService: StatsService, private filterService: DashboardFilterService) {}
+  constructor(private statsService: StatsService, private filterService: DashboardFilterStateService) {}
 
   ngOnInit(): void {
     this.filterService.getFilters().subscribe((filters: DashboardFilters) => this.loadTimeline(filters));
