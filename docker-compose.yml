@@ -29,10 +29,8 @@ services:
       retries: 5
 
   backend:
-    # FastAPI scraping service. app/main.py mounts only the scraping router, so
-    # the HTTP app itself never opens a database connection; DATABASE_URL is read
-    # by app/config.py for the scripts under backend/scripts, which are run in
-    # this same container against the mounted code.
+    # FastAPI scraping service. It fetches and parses, and returns payloads: no
+    # database connection, no database URL, nothing to persist. The API owns that.
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -41,13 +39,9 @@ services:
       - "8003:8001"
     environment:
       PYTHONUNBUFFERED: 1
-      DATABASE_URL: postgresql://pilota:${POSTGRES_PASSWORD:-pilota_secret}@db:5432/pilota
       # CTPB's robots.txt disallows scraping; keep this guard on outside of a
       # deliberate, authorised run.
       CTPB_DEV_MODE: "true"
-    depends_on:
-      db:
-        condition: service_healthy
     volumes:
       # Code from the host, dependencies from the image.
       - ./backend:/app
@@ -59,17 +53,10 @@ services:
       dockerfile: Dockerfile
     container_name: pilota-backend-test
     environment:
-      DATABASE_URL: postgresql://pilota:${POSTGRES_PASSWORD:-pilota_secret}@db:5432/pilota
       PYTHONUNBUFFERED: 1
       CTPB_DEV_MODE: "true"
-    depends_on:
-      db:
-        condition: service_healthy
     volumes:
       - ./backend:/app
-    # No network_mode here: sharing the database's network namespace would make
-    # the `db` hostname in the URL above unresolvable.
-    #
     # pytest is not in requirements.txt, and the image is shared with the
     # scraper, so it is installed here rather than in the image.
     command: >

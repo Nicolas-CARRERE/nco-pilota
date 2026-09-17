@@ -45,7 +45,7 @@ uv run python scripts/save_fixtures.py --update ctpb --url "https://ctpb.euskalp
 
 ```bash
 # Run scraper with fixtures (no live scraping)
-uv run python scripts/run_scraper.py --use-fixtures --ingest
+uv run python scripts/run_scraper.py --use-fixtures
 
 # Run pytest against fixtures
 uv run pytest tests/test_scraper_with_fixtures.py -v
@@ -61,20 +61,23 @@ uv run pytest tests/ -k scraper -v
 uv run python scripts/save_fixtures.py --validate
 ```
 
-### Update Scraper Flags
+### Scraper Flags
 
-The scraper now supports three modes:
+The scraper supports three modes, none of which writes anything:
 
 ```bash
 # Live scraping (default)
-uv run python scripts/run_scraper.py --ingest
+uv run python scripts/run_scraper.py
 
 # Use saved fixtures for testing
-uv run python scripts/run_scraper.py --use-fixtures --ingest
+uv run python scripts/run_scraper.py --use-fixtures
 
 # Update fixtures from live scrape
 uv run python scripts/run_scraper.py --update-fixtures
 ```
+
+The `--ingest` flag is gone: it wrote to PostgreSQL from Python, next to the Node API
+that owns the schema. That path was removed on 2026-09-17 (PIL-16 in the project vault).
 
 ## 📝 Fixture Format
 
@@ -223,7 +226,10 @@ uv run python scripts/run_scraper.py --update-fixtures
 ### 1. Competition Deduplication
 - **Current:** Creates 7,592 competitions (one per game)
 - **Expected:** ~39 competitions (grouped by discipline/series/group/pool)
-- **Fix in progress:** Update matching query in ingestion_service.py
+- **Fix in progress:** the matching query. It was in the Python `ingestion_service.py`,
+  removed on 2026-09-17 (PIL-16) in favour of the Node ingestion
+  (`api/src/services/ingest-scraped-games.ts`) — whether that one groups competitions
+  the same way has not been re-measured, so this stays open until it is.
 
 ### 2. Engagements.php Redirects
 - **Current:** Club names with spaces cause 302 redirects

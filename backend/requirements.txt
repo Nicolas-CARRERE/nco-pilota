@@ -6,5 +6,3 @@ pre-commit
 python-dotenv
 pydantic
 uvicorn
-asyncpg>=0.29.0
-asyncpg>=0.29.0

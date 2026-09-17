@@ -2,7 +2,7 @@
 
 ## Overview
 
-Updated the ingestion pipeline to parse **directly from original HTML** instead of intermediate JSON, preserving all granular competition fields.
+Updated the parser to read **the original HTML** directly instead of an intermediate JSON, preserving all granular competition fields. Ingestion is not this service's job: the Node API persists what the parser returns (see "Where ingestion happens" below).
 
 ---
 
@@ -29,16 +29,16 @@ Updated the ingestion pipeline to parse **directly from original HTML** instead 
 }
 ```
 
-### 2. **Ingestion Service Update** (`app/services/ingestion_service.py`)
+### 2. **Where ingestion happens** — the Node API, not here
 
-**Updated `parse_and_create_competition()`:**
-- Now accepts optional `pre_parsed` dict from HTML parser
-- Uses pre-parsed fields when available (preferred)
-- Falls back to parsing `discipline_context` string for backward compatibility
-
-**Updated `ingest_scraped_games()`:**
-- Checks for pre-parsed fields in game data
-- Passes granular fields to competition creation
+This section described `app/services/ingestion_service.py`, a Python ingestion path
+that wrote the same PostgreSQL schema through `asyncpg`. It was removed on 2026-09-17
+(PIL-16 in the project vault): two writers for one schema, one of which nothing over
+HTTP could reach. The Python service now fetches and parses and returns payloads; the
+Node API owns the database and ingests them
+(`api/src/services/ingest-scraped-games.ts`, reached by `POST /scrape/ctpb/pipeline`).
+The granular fields below are what the parser hands over, and what that ingestion
+consumes.
 
 ---
 
@@ -111,7 +111,7 @@ print(g['organization'])# "CTPB"
 
 ### Parse HTML directly:
 ```bash
-uv run python scripts/run_scraper.py --use-fixtures --ingest
+uv run python scripts/run_scraper.py --use-fixtures
 ```
 
 ### Update HTML fixtures:
@@ -129,7 +129,7 @@ uv run pytest tests/ -v
 
 ## Next Steps
 
-1. **Run ingestion with live HTML** - Test with fresh scrape
+1. **Run the parser against a fresh scrape** - Check it still reads today's page
 2. **Verify DB schema** - Ensure all granular fields are stored
 3. **Update API** - Expose granular fields in competition endpoints
 4. **Add more fixtures** - Cover edge cases (FFPB, different seasons)
