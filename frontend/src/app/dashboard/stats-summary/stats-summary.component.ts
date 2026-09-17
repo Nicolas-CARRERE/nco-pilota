@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StatsService, SummaryStats } from '../../core/services/stats.service';
-import { DashboardFilterService, DashboardFilters } from '../../core/services/filter.service';
+import { DashboardFilterStateService, DashboardFilters } from '../../core/services/dashboard-filter-state.service';
 
 @Component({
   selector: 'app-stats-summary',
@@ -13,7 +13,7 @@ export class StatsSummaryComponent implements OnInit {
   stats: SummaryStats = { total_games: 0, total_players: 0, total_clubs: 0, total_competitions: 0, total_disciplines: 0 };
   loading = false;
 
-  constructor(private statsService: StatsService, private filterService: DashboardFilterService) {}
+  constructor(private statsService: StatsService, private filterService: DashboardFilterStateService) {}
 
   ngOnInit(): void {
     this.filterService.getFilters().subscribe((filters: DashboardFilters) => this.loadStats(filters));

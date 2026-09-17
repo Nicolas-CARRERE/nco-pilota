@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardFilterService, DashboardFilters } from '../core/services/filter.service';
+import { DashboardFilterStateService, DashboardFilters } from '../core/services/dashboard-filter-state.service';
 import { StatsSummaryComponent } from './stats-summary/stats-summary.component';
 import { FilterPanelComponent } from './filter-panel/filter-panel.component';
 import { TopPlayersComponent } from './top-players/top-players.component';
@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   filters: DashboardFilters = {};
   sidebarCollapsed = false;
 
-  constructor(private filterService: DashboardFilterService) {}
+  constructor(private filterService: DashboardFilterStateService) {}
 
   ngOnInit(): void {
     this.filterService.getFilters().subscribe((filters: DashboardFilters) => {
