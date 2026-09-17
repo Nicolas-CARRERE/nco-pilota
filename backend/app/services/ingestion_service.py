@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
-from app.config import get_settings
+from app.config import get_database_url
 from app.services.championship_parser import parse_championship_name
 
 logger = logging.getLogger("pelota.ingestion")
@@ -26,9 +26,12 @@ class IngestionService:
         Initialize ingestion service.
 
         Args:
-            database_url: PostgreSQL connection URL. Defaults to PELOTA_POSTGRES_DATABASE_URL env var.
+            database_url: PostgreSQL connection URL. Defaults to the environment —
+                DATABASE_URL, or PELOTA_POSTGRES_DATABASE_URL. There is no built-in
+                default any more: an unset URL raises rather than pointing at a local
+                database that probably is not there.
         """
-        self.database_url = database_url or get_settings().database_url
+        self.database_url = database_url or get_database_url()
         self._pool: Optional[asyncpg.Pool] = None
 
     async def connect(self) -> None:

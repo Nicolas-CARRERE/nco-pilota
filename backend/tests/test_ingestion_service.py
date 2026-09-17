@@ -9,12 +9,12 @@ class TestIngestionServiceUnit:
     """Unit tests for ingestion service (no database required)."""
     
     @pytest.fixture
-    def service(self):
+    def service(self, database_url):
         """Create ingestion service instance (not connected)."""
-        return IngestionService()
+        return IngestionService(database_url)
     
     def test_service_initialization(self, service):
-        """Test service initializes with default database URL."""
+        """Test the service keeps the URL it was given, and holds no pool yet."""
         assert service.database_url is not None
         assert service._pool is None
     
@@ -112,9 +112,9 @@ class TestIngestionServiceMocked:
     """Tests with mocked database connections."""
     
     @pytest.mark.asyncio
-    async def test_competition_granular_fields_mocked(self):
+    async def test_competition_granular_fields_mocked(self, database_url):
         """Test competition has all granular fields (mocked DB)."""
-        service = IngestionService()
+        service = IngestionService(database_url)
         
         # Mock connection
         mock_pool = AsyncMock()

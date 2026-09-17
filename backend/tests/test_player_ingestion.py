@@ -8,9 +8,9 @@ class TestPlayerIngestionUnit:
     """Unit tests for player ingestion (no database required)."""
     
     @pytest.fixture
-    def service(self):
+    def service(self, database_url):
         """Create ingestion service instance."""
-        return IngestionService()
+        return IngestionService(database_url)
     
     def test_player_name_parsing_standard(self, service):
         """Test player name parsing - standard format."""
@@ -62,13 +62,13 @@ class TestPlayerIngestionUnit:
 class TestPlayerIngestionBulk:
     """Test bulk player ingestion scenarios (logic checks only)."""
     
-    def test_ingest_multiple_players_same_club_logic(self):
+    def test_ingest_multiple_players_same_club_logic(self, database_url):
         """Test ingesting multiple players for the same club - logic exists."""
-        service = IngestionService()
+        service = IngestionService(database_url)
         assert service._get_or_create_player is not None
         assert service._link_player_to_club is not None
     
-    def test_player_with_accents_logic(self):
+    def test_player_with_accents_logic(self, database_url):
         """Test player names with accents - logic exists."""
-        service = IngestionService()
+        service = IngestionService(database_url)
         assert service._get_or_create_player is not None
